@@ -2,6 +2,7 @@ import type { Get } from '@sanity/codegen'
 import { stegaClean } from 'next-sanity'
 import Callout from '@/modules/callout'
 import CustomHTML from '@/modules/custom-html'
+import Hero from '@/modules/hero'
 import HeroCover from '@/modules/hero.cover'
 import HeroSplit from '@/modules/hero.split'
 import ImageGallery from '@/modules/image-gallery'
@@ -15,6 +16,7 @@ import type { ModuleAttributes, PAGE_QUERY_RESULT } from '@/sanity/types'
 const MODULES_MAP = {
 	callout: Callout,
 	'custom-html': CustomHTML,
+	hero: Hero,
 	'hero.cover': HeroCover,
 	'hero.split': HeroSplit,
 	'image-gallery': ImageGallery,

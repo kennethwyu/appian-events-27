@@ -21,6 +21,7 @@
 		"@sanity/dashboard": "^6.0.18",
 		"@sanity/image-url": "^2.1.1",
 		"@sanity/vision": "^6.10.1",
+		"@sanity/webhook": "^4.0.4",
 		"@vidstack/react": "^1.12.13",
 		"babel-plugin-react-compiler": "^1.0.0",
 		"clsx": "^2.1.1",

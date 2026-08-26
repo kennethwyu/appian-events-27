@@ -12,6 +12,18 @@
 	--spacing-ch: 1ch;
 }
 
+/* Hero backdrop. Figma paints #010528 with a 0.6-opacity radial on top;
+ * the stops below have that 0.6 pre-blended against the base. */
+@utility hero-gradient {
+	background-color: #010528;
+	background-image: radial-gradient(
+		ellipse 100% 100% at 100% 100%,
+		#050755 0%,
+		#03063e 50%,
+		#010528 100%
+	);
+}
+
 @custom-variant hover (&:hover);
 
 @custom-variant header-open (body:has(#header-open:checked) &);
@@ -204,7 +216,7 @@
 /* components */
 
 @utility section {
-	@apply mx-auto w-full max-w-7xl px-4 py-12 md:px-8;
+	@apply mx-auto w-full max-w-[1280px] px-grid-margin-mobile py-12 lg:px-grid-margin-desktop;
 }
 
 @utility prose {

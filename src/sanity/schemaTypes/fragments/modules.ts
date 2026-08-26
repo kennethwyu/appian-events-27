@@ -7,6 +7,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 		of: [
 			{ type: 'callout' },
 			{ type: 'custom-html' },
+			{ type: 'hero' },
 			{ type: 'hero.cover' },
 			{ type: 'hero.split' },
 			{ type: 'image-gallery' },
@@ -32,6 +33,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 						name: 'content',
 						of: [
 							'callout',
+							'hero',
 							'hero.cover',
 							'hero.split',
 							'image-gallery',

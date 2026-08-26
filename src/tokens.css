@@ -56,6 +56,18 @@
 	--font-sans:
 		var(--font-funnel-sans), 'Funnel Sans', ui-sans-serif, system-ui, sans-serif;
 
+	/* Display — hero headline. Not in the DS ramp; a one-off in the 2027 design
+	 * (64/64 desktop, 48/56 on the 360 artboard). */
+	--text-display: 3rem; /* 48 */
+	--text-display--line-height: 3.5rem; /* 56 */
+	--text-display--font-weight: 400;
+	--text-display--letter-spacing: -0.03rem;
+
+	--text-display-lg: 4rem; /* 64 */
+	--text-display-lg--line-height: 4rem; /* 64 */
+	--text-display-lg--font-weight: 400;
+	--text-display-lg--letter-spacing: -0.04rem;
+
 	/* Heading scale */
 	--text-h-huge: 3.5rem; /* 56 */
 	--text-h-huge--line-height: 4rem; /* 64 */

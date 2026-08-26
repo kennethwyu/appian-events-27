@@ -6,7 +6,6 @@ import { Suspense } from 'react'
 import { preconnect } from 'react-dom'
 import { dev, ROUTES } from '@/lib/env'
 import { SanityLive } from '@/sanity/lib/live'
-import Announcement, { DynamicAnnouncement } from '@/ui/announcement'
 import DraftModeBanner from '@/ui/draft-mode-banner'
 import Footer, { DynamicFooter } from '@/ui/footer'
 import Header, { DynamicHeader } from '@/ui/header'
@@ -43,14 +42,6 @@ export default async function RootLayout({
 					<a href={`/${ROUTES.a11y}`} className="skip-link">
 						Accessibility statement
 					</a>
-
-					{showDrafts ? (
-						<Suspense>
-							<DynamicAnnouncement />
-						</Suspense>
-					) : (
-						<Announcement perspective="published" stega={false} />
-					)}
 
 					{showDrafts ? (
 						<Suspense fallback={<div className="header-fallback" />}>

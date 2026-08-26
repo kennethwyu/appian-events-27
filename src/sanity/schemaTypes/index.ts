@@ -4,6 +4,7 @@ import callout from '@/modules/callout/schema'
 import customHtml from '@/modules/custom-html/schema'
 import heroCover from '@/modules/hero.cover/schema'
 import heroSplit from '@/modules/hero.split/schema'
+import hero from '@/modules/hero/schema'
 import imageGallery from '@/modules/image-gallery/schema'
 import logoList from '@/modules/logo-list/schema'
 import prose from '@/modules/prose/schema'
@@ -11,7 +12,6 @@ import quoteList from '@/modules/quote-list/schema'
 import statList from '@/modules/stat-list/schema'
 import tabbedContent from '@/modules/tabbed-content/schema'
 // documents
-import announcement from './documents/announcement'
 import globalModule from './documents/global-module'
 import logo from './documents/logo'
 import navigation from './documents/navigation'
@@ -37,7 +37,6 @@ export const schema: SchemaPluginOptions = {
 		globalModule,
 		redirect,
 		// references
-		announcement,
 		logo,
 		navigation,
 		quote,
@@ -55,6 +54,7 @@ export const schema: SchemaPluginOptions = {
 		// modules
 		callout,
 		customHtml,
+		hero,
 		heroCover,
 		heroSplit,
 		imageGallery,

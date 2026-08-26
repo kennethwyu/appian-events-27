@@ -25,7 +25,6 @@ export default structureTool({
 				S.documentTypeListItem('redirect').title('Redirects'),
 
 				S.divider().title('References'),
-				S.documentTypeListItem('announcement').title('Announcements'),
 				S.documentTypeListItem('logo').title('Logos'),
 				S.documentTypeListItem('quote').title('Quotes'),
 
