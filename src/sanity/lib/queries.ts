@@ -1,4 +1,5 @@
 import { groq } from 'next-sanity'
+import { AGENDA_QUERY } from '@/modules/agenda/query'
 import { IMAGE_GALLERY_QUERY } from '@/modules/image-gallery/query'
 import { LOGO_LIST_QUERY } from '@/modules/logo-list/query'
 import { PROSE_QUERY } from '@/modules/prose/query'
@@ -89,6 +90,7 @@ export const MODULES_QUERY = groq`
 		link{ ${LINK_QUERY} }
 	},
 	sidebar{ ${SIDEBAR_QUERY} },
+	${AGENDA_QUERY},
 	${IMAGE_GALLERY_QUERY},
 	${LOGO_LIST_QUERY},
 	${PROSE_QUERY},

@@ -25,6 +25,15 @@ export type SanityImageAssetReference = {
 	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
+export type DayImage = {
+	asset?: SanityImageAssetReference
+	media?: unknown // Unable to locate the referenced type "media" in schema
+	hotspot?: SanityImageHotspot
+	crop?: SanityImageCrop
+	alt?: string
+	_type: 'image'
+}
+
 export type Mobile = {
 	asset?: SanityImageAssetReference
 	media?: unknown // Unable to locate the referenced type "mobile.media" in schema
@@ -536,6 +545,25 @@ export type Callout = {
 	>
 }
 
+export type Agenda = {
+	_type: 'agenda'
+	attributes?: ModuleAttributes
+	intro?: string
+	days?: Array<{
+		chip?: string
+		date?: string
+		image?: DayImage
+		topics?: Array<{
+			title?: string
+			highlight?: boolean
+			_type: 'topic'
+			_key: string
+		}>
+		_type: 'day'
+		_key: string
+	}>
+}
+
 export type Table = {
 	_type: 'table'
 	headerRows?: number
@@ -786,6 +814,9 @@ export type GlobalModule = {
 	before?: Array<
 		| ({
 				_key: string
+		  } & Agenda)
+		| ({
+				_key: string
 		  } & Callout)
 		| ({
 				_key: string
@@ -819,6 +850,9 @@ export type GlobalModule = {
 		  } & TabbedContent)
 	>
 	after?: Array<
+		| ({
+				_key: string
+		  } & Agenda)
 		| ({
 				_key: string
 		  } & Callout)
@@ -863,6 +897,9 @@ export type Page = {
 	_rev: string
 	title?: string
 	modules?: Array<
+		| ({
+				_key: string
+		  } & Agenda)
 		| ({
 				_key: string
 		  } & Callout)
@@ -1159,6 +1196,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
 	| SanityImageAssetReference
+	| DayImage
 	| Mobile
 	| Icon
 	| LinkCardImage
@@ -1175,6 +1213,7 @@ export type AllSanitySchemaTypes =
 	| Hero
 	| CustomHtml
 	| Callout
+	| Agenda
 	| Table
 	| Sidebar
 	| ModuleAttributes
@@ -1219,6 +1258,27 @@ export type PAGE_QUERY_RESULT = {
 	_rev: string
 	title?: string
 	modules: Array<
+		| {
+				_key: string
+				_type: 'agenda'
+				attributes?: ModuleAttributes
+				intro?: string
+				days?: Array<{
+					chip?: string
+					date?: string
+					image?: DayImage
+					topics?: Array<{
+						title?: string
+						highlight?: boolean
+						_type: 'topic'
+						_key: string
+					}>
+					_type: 'day'
+					_key: string
+				}>
+				ctas: null
+				sidebar: null
+		  }
 		| {
 				_key: string
 				_type: 'callout'
@@ -2190,6 +2250,27 @@ export type NOT_FOUND_QUERY_RESULT = {
 	_rev: string
 	title?: string
 	modules: Array<
+		| {
+				_key: string
+				_type: 'agenda'
+				attributes?: ModuleAttributes
+				intro?: string
+				days?: Array<{
+					chip?: string
+					date?: string
+					image?: DayImage
+					topics?: Array<{
+						title?: string
+						highlight?: boolean
+						_type: 'topic'
+						_key: string
+					}>
+					_type: 'day'
+					_key: string
+				}>
+				ctas: null
+				sidebar: null
+		  }
 		| {
 				_key: string
 				_type: 'callout'

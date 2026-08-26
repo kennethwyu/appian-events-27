@@ -3,9 +3,10 @@
 
 @theme {
 	/* Page-level roles, mapped onto the Appian tokens in tokens.css. */
-	--color-background: var(--color-white);
-	--color-foreground: var(--color-body-on-light);
-	--color-stroke: var(--color-border-on-light-primary);
+	/* The 2027 design is dark throughout; modules opt into light surfaces. */
+	--color-background: var(--color-page);
+	--color-foreground: var(--color-body-on-dark);
+	--color-stroke: var(--color-border-on-dark-primary);
 	--color-primary: var(--color-interactive-primary);
 
 	--spacing-lh: 1lh;

@@ -5,6 +5,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 		name: 'modules',
 		type: 'array',
 		of: [
+			{ type: 'agenda' },
 			{ type: 'callout' },
 			{ type: 'custom-html' },
 			{ type: 'hero' },
@@ -32,6 +33,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 					{
 						name: 'content',
 						of: [
+							'agenda',
 							'callout',
 							'hero',
 							'hero.cover',

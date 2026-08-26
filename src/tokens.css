@@ -2,6 +2,7 @@
  * Appian design-system tokens, transcribed from Figma file 6fcQEI69CT6yJLFJRMy23U
  * (artboard vA, node 11279:2301). Comments name the Figma variable each token
  * mirrors. Type/spacing in rem (Figma px / 16); borders and radii in px.
+ * Letter-spacing values in the DS are PERCENTAGES, so they are em here.
  *
  * Components use the semantic tokens only, never primitives or raw hex.
  */
@@ -49,6 +50,9 @@
 	--color-border-on-dark-secondary: var(--color-neutral-600);
 
 	/* overlay/neutral-light/* */
+	/* Page ground. Not a DS variable — a 2027 design fill. */
+	--color-page: #010528;
+
 	--color-overlay-light-20: #ffffff33; /* overlay/neutral-light/020 */
 	--color-overlay-light-40: #ffffff66; /* overlay/neutral-light/040 */
 
@@ -61,54 +65,61 @@
 	--text-display: 3rem; /* 48 */
 	--text-display--line-height: 3.5rem; /* 56 */
 	--text-display--font-weight: 400;
-	--text-display--letter-spacing: -0.03rem;
+	--text-display--letter-spacing: -0.01em;
 
 	--text-display-lg: 4rem; /* 64 */
 	--text-display-lg--line-height: 4rem; /* 64 */
 	--text-display-lg--font-weight: 400;
-	--text-display-lg--letter-spacing: -0.04rem;
+	--text-display-lg--letter-spacing: -0.01em;
 
 	/* Heading scale */
 	--text-h-huge: 3.5rem; /* 56 */
 	--text-h-huge--line-height: 4rem; /* 64 */
 	--text-h-huge--font-weight: 600;
-	--text-h-huge--letter-spacing: -0.0625rem; /* -1 */
+	--text-h-huge--letter-spacing: -0.01em; /* -1% */
 
 	--text-h-lrge: 2.5rem; /* 40 */
 	--text-h-lrge--line-height: 3rem; /* 48 */
 	--text-h-lrge--font-weight: 450;
-	--text-h-lrge--letter-spacing: -0.03125rem; /* -0.5 */
+	--text-h-lrge--letter-spacing: -0.005em; /* -0.5% */
 
 	--text-h-medm: 2rem; /* 32 */
 	--text-h-medm--line-height: 2.5rem; /* 40 */
 	--text-h-medm--font-weight: 450;
-	--text-h-medm--letter-spacing: -0.03125rem; /* -0.5 */
+	--text-h-medm--letter-spacing: -0.005em; /* -0.5% */
 
 	--text-h-xsml: 1.25rem; /* 20 */
 	--text-h-xsml--line-height: 2rem; /* 32 */
 	--text-h-xsml--font-weight: 450;
 	--text-h-xsml--letter-spacing: 0;
 
+	/* 24/32 — the DS h-smll rung. The 2027 design hardcodes it rather than
+	 * binding the variable, so the weight here is the design's (400). */
+	--text-h-smll: 1.5rem; /* 24 */
+	--text-h-smll--line-height: 2rem; /* 32 */
+	--text-h-smll--font-weight: 400;
+	--text-h-smll--letter-spacing: 0;
+
 	/* Paragraph scale */
 	--text-p-lrge: 1.25rem; /* 20 */
 	--text-p-lrge--line-height: 2rem; /* 32 */
 	--text-p-lrge--font-weight: 400;
-	--text-p-lrge--letter-spacing: 0.03125rem; /* 0.5 */
+	--text-p-lrge--letter-spacing: 0.005em; /* 0.5% */
 
 	--text-p-medm: 1rem; /* 16 */
 	--text-p-medm--line-height: 1.5rem; /* 24 */
 	--text-p-medm--font-weight: 400;
-	--text-p-medm--letter-spacing: 0.03125rem; /* 0.5 */
+	--text-p-medm--letter-spacing: 0.005em; /* 0.5% */
 
 	--text-p-smll: 0.875rem; /* 14 */
 	--text-p-smll--line-height: 1.5rem; /* 24 */
 	--text-p-smll--font-weight: 400;
-	--text-p-smll--letter-spacing: 0.0625rem; /* 1 */
+	--text-p-smll--letter-spacing: 0.01em; /* 1% */
 
 	--text-p-xsml: 0.75rem; /* 12 */
 	--text-p-xsml--line-height: 1rem; /* 16 */
 	--text-p-xsml--font-weight: 400;
-	--text-p-xsml--letter-spacing: 0.0625rem; /* 1 */
+	--text-p-xsml--letter-spacing: 0.01em; /* 1% */
 
 	/* Figma uses 450/550 for regular/bold on several ramps. */
 	--font-weight-regular: 400;

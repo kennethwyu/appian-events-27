@@ -1,5 +1,6 @@
 import type { Get } from '@sanity/codegen'
 import { stegaClean } from 'next-sanity'
+import Agenda from '@/modules/agenda'
 import Callout from '@/modules/callout'
 import CustomHTML from '@/modules/custom-html'
 import Hero from '@/modules/hero'
@@ -14,6 +15,7 @@ import TabbedContent from '@/modules/tabbed-content'
 import type { ModuleAttributes, PAGE_QUERY_RESULT } from '@/sanity/types'
 
 const MODULES_MAP = {
+	agenda: Agenda,
 	callout: Callout,
 	'custom-html': CustomHTML,
 	hero: Hero,

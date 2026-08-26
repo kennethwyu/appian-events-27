@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Module } from '@/modules'
 import type { Hero } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
-import Star from './star'
+import Star from '@/ui/star'
 
 export default function ({
 	urgency,
@@ -83,7 +83,7 @@ export default function ({
 					<div className="gap-intra-xxlg lg:mt-inter-xlrg relative mt-10 flex max-w-[544px] flex-col">
 						{hasTagline && (
 							<p className="text-p-lrge text-heading-on-dark-subtle gap-intra-smll flex items-start">
-								<Star className="mt-1.5 size-5 shrink-0" />
+								<Star boxed className="mt-1.5 size-5 shrink-0" />
 								<span>
 									{taglineLead}{' '}
 									<strong className="text-heading-on-dark font-medium">

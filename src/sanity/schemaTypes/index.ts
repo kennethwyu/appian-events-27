@@ -1,5 +1,6 @@
 import type { SchemaPluginOptions } from 'sanity'
 // modules
+import agenda from '@/modules/agenda/schema'
 import callout from '@/modules/callout/schema'
 import customHtml from '@/modules/custom-html/schema'
 import heroCover from '@/modules/hero.cover/schema'
@@ -52,6 +53,7 @@ export const schema: SchemaPluginOptions = {
 		table,
 
 		// modules
+		agenda,
 		callout,
 		customHtml,
 		hero,
