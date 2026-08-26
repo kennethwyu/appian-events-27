@@ -3,6 +3,7 @@ import type { SchemaPluginOptions } from 'sanity'
 import agenda from '@/modules/agenda/schema'
 import callout from '@/modules/callout/schema'
 import customHtml from '@/modules/custom-html/schema'
+import frontRow from '@/modules/front-row/schema'
 import heroCover from '@/modules/hero.cover/schema'
 import heroSplit from '@/modules/hero.split/schema'
 import hero from '@/modules/hero/schema'
@@ -57,6 +58,7 @@ export const schema: SchemaPluginOptions = {
 		agenda,
 		callout,
 		customHtml,
+		frontRow,
 		hero,
 		heroCover,
 		heroSplit,

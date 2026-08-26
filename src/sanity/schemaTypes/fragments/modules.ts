@@ -8,6 +8,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 			{ type: 'agenda' },
 			{ type: 'callout' },
 			{ type: 'custom-html' },
+			{ type: 'front-row' },
 			{ type: 'hero' },
 			{ type: 'hero.cover' },
 			{ type: 'hero.split' },
@@ -36,6 +37,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 						of: [
 							'agenda',
 							'callout',
+							'front-row',
 							'hero',
 							'hero.cover',
 							'hero.split',

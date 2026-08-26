@@ -1,6 +1,7 @@
 import { groq } from 'next-sanity'
 import { cacheLife } from 'next/cache'
 import { AGENDA_QUERY } from '@/modules/agenda/query'
+import { FRONT_ROW_QUERY } from '@/modules/front-row/query'
 import { IMAGE_GALLERY_QUERY } from '@/modules/image-gallery/query'
 import { LOGO_LIST_QUERY } from '@/modules/logo-list/query'
 import { PRICING_QUERY } from '@/modules/pricing/query'
@@ -93,6 +94,7 @@ export const MODULES_QUERY = groq`
 	},
 	sidebar{ ${SIDEBAR_QUERY} },
 	${AGENDA_QUERY},
+	${FRONT_ROW_QUERY},
 	${IMAGE_GALLERY_QUERY},
 	${LOGO_LIST_QUERY},
 	${PRICING_QUERY},
