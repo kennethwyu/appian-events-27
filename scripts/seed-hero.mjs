@@ -38,7 +38,7 @@ const hero = {
 				_type: 'link',
 				label: 'Reserve Early Bird Pricing',
 				type: 'external',
-				// /register is a route handler that redirects to site.registrationUrl
+				// /register is a Sanity redirect document -> Cvent (307)
 				external: '/register',
 			},
 		},

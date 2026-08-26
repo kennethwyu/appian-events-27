@@ -5452,6 +5452,13 @@
           "name": "link"
         },
         "optional": true
+      },
+      "permanent": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       }
     }
   },
@@ -6418,13 +6425,6 @@
               }
             }
           }
-        },
-        "optional": true
-      },
-      "registrationUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
         },
         "optional": true
       },

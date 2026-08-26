@@ -6,10 +6,14 @@ import type { NextRequest } from 'next/server'
  * Sanity webhook target. Published pages are cached under `cacheLife: sanity`
  * (1y), so nothing re-renders on its own — this is how content edits go live.
  *
+ * Redirect documents are resolved in next.config at BUILD time, so edits to
+ * them need a redeploy (point a Vercel Deploy Hook at the same webhook), not a
+ * revalidate. Everything else in the filter below is handled here.
+ *
  * Configure in manage.sanity.io > API > Webhooks:
  *   URL     POST https://appianworld.com/api/revalidate
  *   Trigger create / update / delete
- *   Filter  _type in ['site', 'page', 'global-module', 'navigation', 'logo', 'quote', 'redirect']
+ *   Filter  _type in ['site', 'page', 'global-module', 'navigation', 'logo', 'quote']
  *   Secret  SANITY_REVALIDATE_SECRET
  *
  * The whole site is one page plus iframe shells, so a blanket revalidate of the

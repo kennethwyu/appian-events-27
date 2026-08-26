@@ -23,6 +23,13 @@ export default defineType({
 			type: 'link',
 			validation: (Rule) => Rule.required(),
 		}),
+		defineField({
+			name: 'permanent',
+			type: 'boolean',
+			description:
+				'308 instead of 307. Browsers cache permanent redirects indefinitely, so only use it for a destination that will never change. Leave off for vanity links to third parties (Cvent, etc).',
+			initialValue: false,
+		}),
 	],
 	preview: {
 		select: {

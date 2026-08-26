@@ -13,7 +13,7 @@ const REDIRECTS_QUERY = groq`*[_type == 'redirect']{
 			),
 		destination.external
 	),
-	'permanent': true
+	'permanent': coalesce(permanent, false)
 }`
 
 const nextConfig: NextConfig = {

@@ -31,3 +31,6 @@ git diff ae51a8e07f43addb9cdebc55a1bacdcec6752525 upstream/main -- src/
   it is wired. See the route's own comment for the exact webhook config.
 - **`SANITY_API_READ_TOKEN` currently has write scope.** Rotate to a Viewer token
   before launch — it is embedded as `browserToken` in `defineLive`.
+- **Redirect edits need a rebuild.** `next.config` resolves `redirect` documents at
+  build time, so `/api/revalidate` cannot pick them up. Point a Vercel Deploy Hook
+  at a second Sanity webhook filtered to `_type == 'redirect'`.
