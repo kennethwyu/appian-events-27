@@ -1,0 +1,6 @@
+# Upstream builds with bun (flat node_modules) and imports several packages it
+# only declares transitively. Hoisting keeps pnpm compatible.
+nodeLinker: hoisted
+
+onlyBuiltDependencies:
+  - esbuild

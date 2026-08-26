@@ -1,0 +1,137 @@
+/**
+ * Appian design-system tokens, transcribed from Figma file 6fcQEI69CT6yJLFJRMy23U
+ * (artboard vA, node 11279:2301). Comments name the Figma variable each token
+ * mirrors. Type/spacing in rem (Figma px / 16); borders and radii in px.
+ *
+ * Components use the semantic tokens only, never primitives or raw hex.
+ */
+
+@theme {
+	/* Primitives — not for direct use in components. */
+	--color-appian-blue: #2322f0; /* AppianBlue/100 */
+	--color-sync-cyan: #2ae3ff; /* SyncCyan/100 */
+	--color-white: #ffffff; /* White/100 */
+
+	--color-neutral-900: #1b1d22;
+	--color-neutral-700: #4c5361;
+	--color-neutral-600: #677083;
+	--color-neutral-400: #cacfd8;
+	--color-neutral-300: #e2e4e9;
+	--color-neutral-200: #f0f1f4;
+	--color-neutral-100: #f6f7fe;
+
+	/* Semantic colour */
+	/* text/heading/* */
+	--color-heading-on-dark: var(--color-white);
+	--color-heading-on-dark-subtle: var(--color-neutral-200);
+	--color-heading-on-light: var(--color-neutral-900);
+	--color-heading-on-light-subtle: var(--color-neutral-700);
+
+	/* text/paragraph/* */
+	--color-body-on-dark: var(--color-white);
+	--color-body-on-dark-subtle: var(--color-neutral-200);
+	--color-body-on-light: var(--color-neutral-900);
+	--color-body-on-light-subtle: var(--color-neutral-700);
+	--color-body-on-light-placeholder: var(--color-neutral-600);
+
+	/* text/interactive/* and graphics/in-interactive/* */
+	--color-link-on-dark: var(--color-white);
+	--color-link-on-dark-brand: var(--color-neutral-100);
+	--color-link-on-light-brand: var(--color-appian-blue);
+
+	/* background/interactive/* */
+	--color-interactive-primary: var(--color-appian-blue);
+
+	/* border/on-*-background/* */
+	--color-border-on-light-primary: var(--color-neutral-300);
+	--color-border-on-light-secondary: var(--color-neutral-400);
+	--color-border-on-dark-primary: var(--color-neutral-700);
+	--color-border-on-dark-secondary: var(--color-neutral-600);
+
+	/* overlay/neutral-light/* */
+	--color-overlay-light-20: #ffffff33; /* overlay/neutral-light/020 */
+	--color-overlay-light-40: #ffffff66; /* overlay/neutral-light/040 */
+
+	/* Typography — font/family + Text Semantic/* */
+	--font-sans:
+		var(--font-funnel-sans), 'Funnel Sans', ui-sans-serif, system-ui, sans-serif;
+
+	/* Heading scale */
+	--text-h-huge: 3.5rem; /* 56 */
+	--text-h-huge--line-height: 4rem; /* 64 */
+	--text-h-huge--font-weight: 600;
+	--text-h-huge--letter-spacing: -0.0625rem; /* -1 */
+
+	--text-h-lrge: 2.5rem; /* 40 */
+	--text-h-lrge--line-height: 3rem; /* 48 */
+	--text-h-lrge--font-weight: 450;
+	--text-h-lrge--letter-spacing: -0.03125rem; /* -0.5 */
+
+	--text-h-medm: 2rem; /* 32 */
+	--text-h-medm--line-height: 2.5rem; /* 40 */
+	--text-h-medm--font-weight: 450;
+	--text-h-medm--letter-spacing: -0.03125rem; /* -0.5 */
+
+	--text-h-xsml: 1.25rem; /* 20 */
+	--text-h-xsml--line-height: 2rem; /* 32 */
+	--text-h-xsml--font-weight: 450;
+	--text-h-xsml--letter-spacing: 0;
+
+	/* Paragraph scale */
+	--text-p-lrge: 1.25rem; /* 20 */
+	--text-p-lrge--line-height: 2rem; /* 32 */
+	--text-p-lrge--font-weight: 400;
+	--text-p-lrge--letter-spacing: 0.03125rem; /* 0.5 */
+
+	--text-p-medm: 1rem; /* 16 */
+	--text-p-medm--line-height: 1.5rem; /* 24 */
+	--text-p-medm--font-weight: 400;
+	--text-p-medm--letter-spacing: 0.03125rem; /* 0.5 */
+
+	--text-p-smll: 0.875rem; /* 14 */
+	--text-p-smll--line-height: 1.5rem; /* 24 */
+	--text-p-smll--font-weight: 400;
+	--text-p-smll--letter-spacing: 0.0625rem; /* 1 */
+
+	--text-p-xsml: 0.75rem; /* 12 */
+	--text-p-xsml--line-height: 1rem; /* 16 */
+	--text-p-xsml--font-weight: 400;
+	--text-p-xsml--letter-spacing: 0.0625rem; /* 1 */
+
+	/* Figma uses 450/550 for regular/bold on several ramps. */
+	--font-weight-regular: 400;
+	--font-weight-book: 450;
+	--font-weight-medium: 550;
+	--font-weight-semibold: 600;
+
+	/* Spacing — measure-gap-intra/* (within a component) */
+	--spacing-intra-xxxs: 0rem; /* 0 */
+	--spacing-intra-xxsm: 0.125rem; /* 2 */
+	--spacing-intra-xsml: 0.25rem; /* 4 */
+	--spacing-intra-smll: 0.5rem; /* 8 */
+	--spacing-intra-medm: 0.75rem; /* 12 */
+	--spacing-intra-lrge: 1rem; /* 16 */
+	--spacing-intra-xlrg: 1.5rem; /* 24 */
+	--spacing-intra-xxlg: 2rem; /* 32 */
+	--spacing-intra-xxxl: 2.5rem; /* 40 */
+	--spacing-intra-huge: 3rem; /* 48 */
+
+	/* measure-gap-inter/* (between sections) */
+	--spacing-inter-medm: 5rem; /* 80 */
+	--spacing-inter-xlrg: 7rem; /* 112 */
+
+	/* measure-grid/* */
+	--spacing-grid-margin-desktop: 5rem; /* 80 */
+	--spacing-grid-margin-mobile: 1.5rem; /* 24, from the 360 artboard */
+
+	/* Measure Contextual/* */
+	--spacing-button-cta-height: 2.5rem; /* 40 */
+
+	/* border/radius/* and border/width/* */
+	--radius-000: 0px;
+	--radius-020: 4px;
+	--radius-030: 8px;
+
+	--border-width-010: 1px;
+	--border-width-020: 2px;
+}
