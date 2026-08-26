@@ -37,7 +37,9 @@ export default function ({ intro, days, ...props }: Agenda) {
 										{day.chip}
 									</p>
 								)}
-								{day.date && <p className="text-h-smll">{day.date}</p>}
+								{day.date && (
+									<p className="text-h-smll font-normal">{day.date}</p>
+								)}
 							</div>
 
 							{!!day.topics?.length && (

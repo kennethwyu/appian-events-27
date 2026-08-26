@@ -3,6 +3,7 @@ import { stegaClean } from 'next-sanity'
 import Agenda from '@/modules/agenda'
 import Callout from '@/modules/callout'
 import CustomHTML from '@/modules/custom-html'
+import Finale from '@/modules/finale'
 import FrontRow from '@/modules/front-row'
 import Hero from '@/modules/hero'
 import HeroCover from '@/modules/hero.cover'
@@ -20,6 +21,7 @@ const MODULES_MAP = {
 	agenda: Agenda,
 	callout: Callout,
 	'custom-html': CustomHTML,
+	finale: Finale,
 	'front-row': FrontRow,
 	hero: Hero,
 	'hero.cover': HeroCover,

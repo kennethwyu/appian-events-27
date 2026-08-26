@@ -100,11 +100,12 @@
 	--text-h-xsml--font-weight: 450;
 	--text-h-xsml--letter-spacing: 0;
 
-	/* 24/32 — the DS h-smll rung. The 2027 design hardcodes it rather than
-	 * binding the variable, so the weight here is the design's (400). */
+	/* 24/32 — the DS h-smll rung, hardcoded rather than bound in the 2027
+	 * design. Weight 450 to match the other h-* rungs and the finale caption;
+	 * the agenda date overrides to 400 at its call site. */
 	--text-h-smll: 1.5rem; /* 24 */
 	--text-h-smll--line-height: 2rem; /* 32 */
-	--text-h-smll--font-weight: 400;
+	--text-h-smll--font-weight: 450;
 	--text-h-smll--letter-spacing: 0;
 
 	/* Paragraph scale */
