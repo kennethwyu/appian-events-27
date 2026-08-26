@@ -2228,6 +2228,13 @@
           },
           "optional": true
         },
+        "badgeAfterCutoff": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "price": {
           "type": "objectAttribute",
           "value": {
@@ -2250,6 +2257,13 @@
           "optional": true
         },
         "cutoffNote": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "ctaLabelAfterCutoff": {
           "type": "objectAttribute",
           "value": {
             "type": "string"

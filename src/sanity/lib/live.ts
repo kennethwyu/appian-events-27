@@ -7,6 +7,7 @@ import {
 	resolvePerspectiveFromCookies,
 	type LivePerspective,
 } from 'next-sanity/live'
+import { cacheLife } from 'next/cache'
 import { cookies, draftMode } from 'next/headers'
 import { dev } from '@/lib/env'
 import { apiVersion } from '@/sanity/env'
@@ -67,6 +68,9 @@ export async function sanityFetchMetadata<const QueryString extends string>({
 	perspective: LivePerspective
 }) {
 	'use cache'
+	// Without this the config default (1y) applies, so titles, OG images and the
+	// sitemap stay frozen even though the page body is bounded to an hour.
+	cacheLife('hours')
 	const { data } = await sanityFetch({
 		query,
 		params,

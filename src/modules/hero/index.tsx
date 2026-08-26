@@ -1,5 +1,4 @@
 import { stegaClean } from 'next-sanity'
-import Image from 'next/image'
 import { Module } from '@/modules'
 import type { Hero } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
@@ -31,14 +30,14 @@ export default function ({
 			 * against the section's padding box, which is exactly that edge. */}
 			<div className="section relative flex flex-col py-12 lg:h-[1000px] lg:py-30">
 				{stegaClean(showVisual) !== false && (
-					<Image
-						src="/hero/visual.svg"
-						alt=""
-						width={624}
-						height={841}
-						priority
+					// Purely decorative and desktop-only, so it's a background image on a
+					// `hidden lg:block` element rather than an <img>: browsers never fetch
+					// a background on a display:none element, which keeps the 21KB off
+					// mobile. An <img> would still be requested there, and `loading="lazy"`
+					// only defers it heuristically.
+					<div
 						aria-hidden
-						className="pointer-events-none absolute top-1/2 right-0 hidden -translate-y-1/2 select-none lg:block"
+						className="pointer-events-none absolute top-1/2 right-0 hidden h-[841px] w-[624px] -translate-y-1/2 bg-[url('/hero/visual.svg')] bg-contain bg-no-repeat select-none lg:block"
 					/>
 				)}
 

@@ -19,6 +19,9 @@ import type { NextRequest } from 'next/server'
  * The whole site is one page plus iframe shells, so a blanket revalidate of the
  * root layout is both correct and cheaper to reason about than tag plumbing.
  */
+/** Symmetric window, so modest clock skew between Sanity and Vercel is fine. */
+const MAX_SIGNATURE_AGE_MS = 5 * 60 * 1000
+
 export async function POST(req: NextRequest) {
 	const secret = process.env.SANITY_REVALIDATE_SECRET
 
@@ -31,6 +34,19 @@ export async function POST(req: NextRequest) {
 
 	if (!signature) {
 		return Response.json({ message: 'Missing signature' }, { status: 401 })
+	}
+
+	// @sanity/webhook verifies the HMAC and that `t` parses as a plausible unix
+	// millisecond value, but never bounds its age — a captured request would
+	// replay forever, forcing purges and Sanity reads on every hit.
+	const timestamp = Number(signature.match(/(?:^|,)t=(\d+)/)?.[1])
+
+	if (!Number.isFinite(timestamp)) {
+		return Response.json({ message: 'Malformed signature' }, { status: 401 })
+	}
+
+	if (Math.abs(Date.now() - timestamp) > MAX_SIGNATURE_AGE_MS) {
+		return Response.json({ message: 'Signature expired' }, { status: 401 })
 	}
 
 	// Must be the raw body — re-encoding JSON changes the bytes and breaks the HMAC.

@@ -8,10 +8,12 @@ import { marks } from '@/ui/portable-text-marks'
 export default function ({
 	intro,
 	badge,
+	badgeAfterCutoff,
 	price,
 	fullPrice,
 	cutoff,
 	cutoffNote,
+	ctaLabelAfterCutoff,
 	includes,
 	ctas,
 	note,
@@ -19,11 +21,29 @@ export default function ({
 	...props
 }: Pricing) {
 	// Evaluated server-side. The page is cached for an hour (see CachedPage), so
-	// the rollover lands within an hour of midnight UTC rather than instantly.
+	// the rollover lands within an hour of the cutoff rather than instantly.
+	//
+	// The cutoff is INCLUSIVE. A Sanity date parses as UTC midnight, so comparing
+	// against it directly ends the early bird at the start of that day — a full
+	// day before the "through <date>" copy promises.
 	const cutoffDate = stegaClean(cutoff)
-	const earlyBirdOver = !!cutoffDate && new Date(cutoffDate) < new Date()
-	const shownPrice = earlyBirdOver ? (fullPrice ?? price) : price
+	const earlyBirdOver =
+		!!cutoffDate && new Date(`${cutoffDate}T23:59:59.999Z`) < new Date()
+
+	// `||` not `??`: an emptied string field is not a usable price.
+	const shownPrice = earlyBirdOver ? fullPrice || price : price
 	const struckPrice = earlyBirdOver ? null : fullPrice
+	const shownBadge = earlyBirdOver ? badgeAfterCutoff : badge
+
+	// Stop the button advertising a price that is no longer on offer.
+	const shownCtas =
+		earlyBirdOver && ctaLabelAfterCutoff && ctas?.length
+			? ctas.map((cta, i) =>
+					i === 0 && cta.link
+						? { ...cta, link: { ...cta.link, label: ctaLabelAfterCutoff } }
+						: cta,
+				)
+			: ctas
 
 	return (
 		<Module {...props}>
@@ -33,9 +53,9 @@ export default function ({
 				<div className="gap-intra-xxlg grid items-stretch lg:grid-cols-2">
 					<div className="gap-intra-xxlg flex flex-col">
 						<div className="text-body-on-light gap-intra-xxlg rounded-030 p-intra-xxlg flex flex-col items-start bg-white">
-							{badge && (
+							{shownBadge && (
 								<p className="border-border-on-light-secondary bg-surface-light-secondary text-p-xsml text-body-on-light-subtle px-intra-medm py-intra-xsml rounded-full border font-medium tracking-[0.05em]">
-									{badge}
+									{shownBadge}
 								</p>
 							)}
 
@@ -74,7 +94,7 @@ export default function ({
 								</>
 							)}
 
-							<CTAList ctas={ctas} className="w-full *:w-full" />
+							<CTAList ctas={shownCtas} className="w-full *:w-full" />
 						</div>
 
 						{(note?.body || note?.footnote) && (

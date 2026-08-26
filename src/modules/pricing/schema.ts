@@ -26,6 +26,14 @@ export default defineModule({
 			name: 'badge',
 			type: 'string',
 			placeholder: 'e.g. EARLY BIRD',
+			description: 'Shown while the cutoff is in the future.',
+			group: 'pricing',
+		}),
+		defineField({
+			name: 'badgeAfterCutoff',
+			title: 'Badge after cutoff',
+			type: 'string',
+			description: 'Leave empty to hide the badge once the cutoff passes.',
 			group: 'pricing',
 		}),
 		defineField({
@@ -50,7 +58,7 @@ export default defineModule({
 			title: 'Early-bird cutoff',
 			type: 'date',
 			description:
-				'After this date the full price is shown on its own and the note is hidden. Leave empty to always show the current price.',
+				'Inclusive — the early-bird price still applies for the whole of this day. After it, the full price shows on its own. Leave empty to always show the current price.',
 			options: { dateFormat: 'YYYY-MM-DD' },
 			group: 'pricing',
 		}),
@@ -59,6 +67,14 @@ export default defineModule({
 			type: 'string',
 			placeholder: 'e.g. Limited through 31 October',
 			description: 'Shown only while the cutoff is in the future.',
+			group: 'pricing',
+		}),
+		defineField({
+			name: 'ctaLabelAfterCutoff',
+			title: 'CTA label after cutoff',
+			type: 'string',
+			description:
+				'Replaces the first call-to-action’s label once the cutoff passes, so it stops advertising early-bird pricing.',
 			group: 'pricing',
 		}),
 		defineField({

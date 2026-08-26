@@ -313,10 +313,12 @@ export type Pricing = {
 	attributes?: ModuleAttributes
 	intro?: string
 	badge?: string
+	badgeAfterCutoff?: string
 	price?: string
 	fullPrice?: string
 	cutoff?: string
 	cutoffNote?: string
+	ctaLabelAfterCutoff?: string
 	includes?: Array<string>
 	ctas?: Array<
 		{
@@ -1791,10 +1793,12 @@ export type PAGE_QUERY_RESULT = {
 				attributes?: ModuleAttributes
 				intro?: string
 				badge?: string
+				badgeAfterCutoff?: string
 				price?: string
 				fullPrice?: string
 				cutoff?: string
 				cutoffNote?: string
+				ctaLabelAfterCutoff?: string
 				includes?: Array<string>
 				ctas: Array<{
 					_key: string
@@ -2879,10 +2883,12 @@ export type NOT_FOUND_QUERY_RESULT = {
 				attributes?: ModuleAttributes
 				intro?: string
 				badge?: string
+				badgeAfterCutoff?: string
 				price?: string
 				fullPrice?: string
 				cutoff?: string
 				cutoffNote?: string
+				ctaLabelAfterCutoff?: string
 				includes?: Array<string>
 				ctas: Array<{
 					_key: string

@@ -23,6 +23,8 @@ const pricing = {
 	_type: 'pricing',
 	intro: 'Join us for Appian World 2027',
 	badge: 'EARLY BIRD',
+	badgeAfterCutoff: '',
+	ctaLabelAfterCutoff: 'Reserve Your Ticket',
 	price: '$1,795',
 	fullPrice: '$2,195',
 	cutoff: '2026-10-31',
