@@ -51,7 +51,15 @@ export default async function RootLayout({
 						<Header perspective="published" stega={false} />
 					)}
 
-					<main id="main-content" tabIndex={-1}>
+					{/* The design is a fixed 1280 canvas, so the whole page column is
+					 * capped here rather than per module. Section backgrounds (the
+					 * front-row photo, the hero gradient) stop at 1280 with the page
+					 * ground either side, instead of bleeding to the viewport. */}
+					<main
+						id="main-content"
+						tabIndex={-1}
+						className="mx-auto w-full max-w-[1280px]"
+					>
 						{children}
 					</main>
 
