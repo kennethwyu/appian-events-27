@@ -28,7 +28,7 @@ export default function ({
 			{/* Figma places the visual flush to the 1280 frame's right edge, outside
 			 * the grid margin, vertically centred. Absolute positioning resolves
 			 * against the section's padding box, which is exactly that edge. */}
-			<div className="section relative flex flex-col py-12 lg:h-[1000px] lg:py-30">
+			<div className="section relative flex flex-col py-12 lg:min-h-[1000px] lg:py-30">
 				{stegaClean(showVisual) !== false && (
 					// Purely decorative and desktop-only, so it's a background image on a
 					// `hidden lg:block` element rather than an <img>: browsers never fetch
