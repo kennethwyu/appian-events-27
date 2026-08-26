@@ -22,3 +22,12 @@ git diff ae51a8e07f43addb9cdebc55a1bacdcec6752525 upstream/main -- src/
 - `lint` script replaced with `format:check` (`next lint` gone in Next 16;
   upstream ships no ESLint config).
 - Token layer in `src/tokens.css` mirrors Appian's Figma variables.
+
+## Pending setup
+
+- **Sanity revalidate webhook is not configured yet.** `/api/revalidate` is built
+  and verified locally, but no webhook exists. Every route builds with
+  `cacheLife: sanity` (Revalidate 1y), so published edits will not go live until
+  it is wired. See the route's own comment for the exact webhook config.
+- **`SANITY_API_READ_TOKEN` currently has write scope.** Rotate to a Viewer token
+  before launch — it is embedded as `browserToken` in `defineLive`.

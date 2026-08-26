@@ -37,8 +37,9 @@ const hero = {
 			link: {
 				_type: 'link',
 				label: 'Reserve Early Bird Pricing',
-				type: 'internal',
-				internal: { _type: 'reference', _ref: 'page-register' },
+				type: 'external',
+				// /register is a route handler that redirects to site.registrationUrl
+				external: '/register',
 			},
 		},
 	],
@@ -63,24 +64,11 @@ const hero = {
 	showVisual: true,
 }
 
-const registerPage = {
-	_id: 'page-register',
-	_type: 'page',
-	title: 'Register',
-	metadata: {
-		_type: 'metadata',
-		title: 'Register — Appian World 2027',
-		slug: { _type: 'slug', current: 'register' },
-	},
-}
-
 await client
 	.transaction()
-	.createIfNotExists(registerPage)
 	.patch('page-index', (p) =>
 		p.set({ modules: [hero] }).setIfMissing({ modules: [] }),
 	)
 	.commit()
 
 console.log('✓ hero seeded on page-index')
-console.log('✓ page/register created (Cvent iframe shell target)')

@@ -32,6 +32,15 @@ export default defineType({
 			group: 'branding',
 		}),
 		defineField({
+			name: 'registrationUrl',
+			title: 'Registration URL (Cvent)',
+			description:
+				'/register redirects here. Cvent registration does not work inside an iframe, so this is an outbound redirect, not an embed.',
+			type: 'url',
+			placeholder: 'https://web.cvent.com/event/...',
+			group: 'info',
+		}),
+		defineField({
 			name: 'header',
 			type: 'reference',
 			to: [{ type: 'navigation' }],

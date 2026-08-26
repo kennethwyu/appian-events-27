@@ -6421,6 +6421,13 @@
         },
         "optional": true
       },
+      "registrationUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "header": {
         "type": "objectAttribute",
         "value": {
