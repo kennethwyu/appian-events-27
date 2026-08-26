@@ -8,6 +8,7 @@ import heroSplit from '@/modules/hero.split/schema'
 import hero from '@/modules/hero/schema'
 import imageGallery from '@/modules/image-gallery/schema'
 import logoList from '@/modules/logo-list/schema'
+import pricing from '@/modules/pricing/schema'
 import prose from '@/modules/prose/schema'
 import quoteList from '@/modules/quote-list/schema'
 import statList from '@/modules/stat-list/schema'
@@ -61,6 +62,7 @@ export const schema: SchemaPluginOptions = {
 		heroSplit,
 		imageGallery,
 		logoList,
+		pricing,
 		prose,
 		quoteList,
 		statList,

@@ -166,19 +166,20 @@
 
 /* ctas, links */
 
+/* Appian CTA button: measure-height-button-cta 40, px 24, radius/020,
+ * p-smll bold. Sizing is fixed by the DS, not em-relative. */
 @utility action-base {
 	cursor: pointer;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	gap: 0.5em;
-	padding: 0.25em 0.75em;
+	@apply gap-intra-smll h-button-cta-height rounded-020 px-intra-xlrg text-p-smll font-medium;
 	@apply active:scale-98 transition-all;
 }
 
 @utility action {
-	@apply action-base bg-primary text-background;
+	@apply action-base bg-interactive-primary text-link-on-dark hover:brightness-110;
 }
 
 @utility action-outline {

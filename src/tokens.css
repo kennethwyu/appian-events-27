@@ -50,8 +50,13 @@
 	--color-border-on-dark-secondary: var(--color-neutral-600);
 
 	/* overlay/neutral-light/* */
-	/* Page ground. Not a DS variable — a 2027 design fill. */
+	/* background/surface/light-secondary */
+	--color-surface-light-secondary: #f6f7f8;
+
+	/* Not DS variables — 2027 design fills. */
 	--color-page: #010528;
+	--color-quote-card-from: #1b204b99; /* rgba(27,32,75,0.6) */
+	--color-quote-card-to: #1b204b;
 
 	--color-overlay-light-20: #ffffff33; /* overlay/neutral-light/020 */
 	--color-overlay-light-40: #ffffff66; /* overlay/neutral-light/040 */

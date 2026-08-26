@@ -1,6 +1,7 @@
 import pkg from '@@/package.json'
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
+import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -56,6 +57,10 @@ async function CachedPage({
 	stega,
 }: { slug?: string[] } & DynamicFetchOptions) {
 	'use cache'
+	// The default `sanity` profile is 1y/1y, which means a missing or broken
+	// revalidate webhook freezes the site indefinitely, and any date-driven
+	// content (the pricing cutoff) never rolls over. An hour bounds both.
+	cacheLife('hours')
 	const page = await getPage({ slug, perspective, stega })
 	if (!page) notFound()
 
@@ -120,6 +125,10 @@ async function getPage({
 	stega,
 }: { slug?: string[] } & DynamicFetchOptions) {
 	'use cache'
+	// Bounded explicitly: the config default (`sanity`) is 1y, and an outer
+	// cacheLife does not shorten an inner one, so leaving this implicit would
+	// re-render CachedPage hourly against year-old content.
+	cacheLife('hours')
 	const { data } = await sanityFetch({
 		query: PAGE_QUERY,
 		params: { slug: slug ? slug.join('/') : 'index' },

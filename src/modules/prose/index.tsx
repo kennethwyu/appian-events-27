@@ -4,6 +4,7 @@ import { Module } from '@/modules'
 import CustomHTML from '@/modules/custom-html'
 import type { Prose } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
+import { marks } from '@/ui/portable-text-marks'
 import Sidebar from '@/ui/sidebar'
 import TableOfContents from '@/ui/table-of-contents'
 import AnchoredHeading from './anchored-heading'
@@ -43,6 +44,7 @@ export default function ({
 							h5: (node) => <AnchoredHeading as="h5" {...node} />,
 							h6: (node) => <AnchoredHeading as="h6" {...node} />,
 						},
+						marks,
 						types: {
 							image: Image,
 							ctas: ({ value }) => <CTAList ctas={value.ctas} />,

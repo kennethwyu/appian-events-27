@@ -1,7 +1,9 @@
 import { groq } from 'next-sanity'
+import { cacheLife } from 'next/cache'
 import { AGENDA_QUERY } from '@/modules/agenda/query'
 import { IMAGE_GALLERY_QUERY } from '@/modules/image-gallery/query'
 import { LOGO_LIST_QUERY } from '@/modules/logo-list/query'
+import { PRICING_QUERY } from '@/modules/pricing/query'
 import { PROSE_QUERY } from '@/modules/prose/query'
 import { QUOTE_LIST_QUERY } from '@/modules/quote-list/query'
 import { TABBED_CONTENT_QUERY } from '@/modules/tabbed-content/query'
@@ -93,6 +95,7 @@ export const MODULES_QUERY = groq`
 	${AGENDA_QUERY},
 	${IMAGE_GALLERY_QUERY},
 	${LOGO_LIST_QUERY},
+	${PRICING_QUERY},
 	${PROSE_QUERY},
 	${QUOTE_LIST_QUERY},
 	${TABBED_CONTENT_QUERY},
@@ -102,6 +105,7 @@ export const MODULES_QUERY = groq`
 
 export async function getSite({ perspective, stega }: DynamicFetchOptions) {
 	'use cache'
+	cacheLife('hours')
 	const { data } = await sanityFetch({ query: SITE_QUERY, perspective, stega })
 	return data as SITE_QUERY_RESULT
 }
