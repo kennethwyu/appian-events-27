@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { EditIcon } from '@sanity/icons/Edit'
 import { ErrorScreenIcon } from '@sanity/icons/ErrorScreen'
 import { HomeIcon } from '@sanity/icons/Home'
 import { SearchIcon } from '@sanity/icons/Search'
@@ -10,11 +9,7 @@ export default defineType({
 	name: 'page',
 	title: 'Page',
 	type: 'document',
-	groups: [
-		{ name: 'content', default: true },
-		{ name: 'markdown' },
-		{ name: 'metadata' },
-	],
+	groups: [{ name: 'content', default: true }, { name: 'metadata' }],
 	fields: [
 		defineField({
 			name: 'title',
@@ -25,17 +20,6 @@ export default defineType({
 		defineField({
 			...modules(),
 			group: 'content',
-		}),
-		defineField({
-			name: 'markdown',
-			type: 'code',
-			description:
-				'Served at <slug>.md; Leave empty to disable route generation.',
-			options: {
-				language: 'markdown',
-				languageAlternatives: [{ title: 'Markdown', value: 'markdown' }],
-			},
-			group: 'markdown',
 		}),
 		defineField({
 			name: 'metadata',
@@ -56,7 +40,6 @@ export default defineType({
 				(slug === 'index' && HomeIcon) ||
 				(slug === '404' && ErrorScreenIcon) ||
 				(slug === 'search' && SearchIcon) ||
-				(slug === 'blog' && EditIcon) ||
 				(noIndex && VscEyeClosed),
 		}),
 	},
