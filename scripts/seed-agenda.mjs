@@ -28,7 +28,7 @@ const client = createClient({
 })
 
 async function upload(file) {
-	const filename = basename(file)
+	const filename = `designer-${basename(file)}`
 	const existing = await client.fetch(
 		`*[_type == 'sanity.imageAsset' && originalFilename == $filename][0]._id`,
 		{ filename },
@@ -117,12 +117,16 @@ const agenda = {
 	days: resolved,
 }
 
-// Replace an existing agenda in place; otherwise append after the hero.
+// Desktop order: hero, front-row, agenda, … Insert rather than append, so
+// re-running once later modules exist doesn't shunt it to the end of the page.
 const page = await client.getDocument('page-index')
-const modules = (page?.modules ?? []).filter((m) => m._type !== 'agenda')
-await client
-	.patch('page-index')
-	.set({ modules: [...modules, agenda] })
-	.commit()
+const rest = (page?.modules ?? []).filter((m) => m._type !== 'agenda')
+const after = rest.findIndex((m) => m._type === 'front-row')
+const modules =
+	after === -1
+		? [...rest, agenda]
+		: [...rest.slice(0, after + 1), agenda, ...rest.slice(after + 1)]
+
+await client.patch('page-index').set({ modules }).commit()
 
 console.log('✓ agenda seeded on page-index')

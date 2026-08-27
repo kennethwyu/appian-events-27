@@ -24,7 +24,7 @@ const client = createClient({
 })
 
 const file = join(dir, 'front-row.jpg')
-const filename = basename(file)
+const filename = `designer-${basename(file)}`
 let assetId = await client.fetch(
 	`*[_type == 'sanity.imageAsset' && originalFilename == $filename][0]._id`,
 	{ filename },

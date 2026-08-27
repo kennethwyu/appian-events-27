@@ -18,13 +18,11 @@ export default function ({
 	return (
 		<Module className="bg-band-base relative isolate overflow-clip" {...props}>
 			{image?.asset && (
-				// object-position matches the design's crop: Figma frames the photo
-				// off-centre (visible window centred at ~57%/58% of the source).
 				<Img
 					image={image}
 					width={2560}
 					alt={image.alt ?? ''}
-					className="absolute inset-0 -z-20 size-full object-cover object-[57%_58%]"
+					className="absolute inset-0 -z-20 size-full object-cover"
 				/>
 			)}
 
