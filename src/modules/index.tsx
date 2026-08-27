@@ -9,7 +9,7 @@ import Hero from '@/modules/hero'
 import HeroCover from '@/modules/hero.cover'
 import HeroSplit from '@/modules/hero.split'
 import ImageGallery from '@/modules/image-gallery'
-import LogoList from '@/modules/logo-list'
+import LogoWall from '@/modules/logo-wall'
 import Pricing from '@/modules/pricing'
 import Prose from '@/modules/prose'
 import QuoteList from '@/modules/quote-list'
@@ -27,7 +27,7 @@ const MODULES_MAP = {
 	'hero.cover': HeroCover,
 	'hero.split': HeroSplit,
 	'image-gallery': ImageGallery,
-	'logo-list': LogoList,
+	'logo-wall': LogoWall,
 	pricing: Pricing,
 	prose: Prose,
 	'quote-list': QuoteList,

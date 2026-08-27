@@ -9,7 +9,7 @@ import heroCover from '@/modules/hero.cover/schema'
 import heroSplit from '@/modules/hero.split/schema'
 import hero from '@/modules/hero/schema'
 import imageGallery from '@/modules/image-gallery/schema'
-import logoList from '@/modules/logo-list/schema'
+import logoWall from '@/modules/logo-wall/schema'
 import pricing from '@/modules/pricing/schema'
 import prose from '@/modules/prose/schema'
 import quoteList from '@/modules/quote-list/schema'
@@ -65,7 +65,7 @@ export const schema: SchemaPluginOptions = {
 		heroCover,
 		heroSplit,
 		imageGallery,
-		logoList,
+		logoWall,
 		pricing,
 		prose,
 		quoteList,

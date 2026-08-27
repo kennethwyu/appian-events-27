@@ -4,7 +4,7 @@ import { AGENDA_QUERY } from '@/modules/agenda/query'
 import { FINALE_QUERY } from '@/modules/finale/query'
 import { FRONT_ROW_QUERY } from '@/modules/front-row/query'
 import { IMAGE_GALLERY_QUERY } from '@/modules/image-gallery/query'
-import { LOGO_LIST_QUERY } from '@/modules/logo-list/query'
+import { LOGO_WALL_QUERY } from '@/modules/logo-wall/query'
 import { PRICING_QUERY } from '@/modules/pricing/query'
 import { PROSE_QUERY } from '@/modules/prose/query'
 import { QUOTE_LIST_QUERY } from '@/modules/quote-list/query'
@@ -98,7 +98,7 @@ export const MODULES_QUERY = groq`
 	${FINALE_QUERY},
 	${FRONT_ROW_QUERY},
 	${IMAGE_GALLERY_QUERY},
-	${LOGO_LIST_QUERY},
+	${LOGO_WALL_QUERY},
 	${PRICING_QUERY},
 	${PROSE_QUERY},
 	${QUOTE_LIST_QUERY},
