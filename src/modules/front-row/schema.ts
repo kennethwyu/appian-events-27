@@ -3,6 +3,7 @@ import { ImageIcon } from '@sanity/icons/Image'
 import { PiFilmSlate } from 'react-icons/pi'
 import { count } from '@/lib/utils'
 import defineModule from '@/sanity/schemaTypes/fragments/define-module'
+import youtubeId from './youtube-id'
 
 export default defineModule({
 	name: 'front-row',
@@ -54,12 +55,20 @@ export default defineModule({
 		}),
 		defineField({
 			name: 'youtubeId',
-			title: 'YouTube video ID',
+			title: 'YouTube video',
 			type: 'string',
 			description:
-				'Just the ID, not the URL — the v= value from youtube.com/watch?v=…. Leave empty to hide the play link.',
+				'A video ID or any YouTube URL. Leave empty to hide the play link.',
 			placeholder: 'e.g. 2o1wbTwArSo',
 			group: 'media',
+			// Without this, an unparseable value published quietly and the play
+			// button opened an empty player.
+			validation: (Rule) =>
+				Rule.custom((value) =>
+					!value || youtubeId(value)
+						? true
+						: 'Not a recognisable YouTube ID or URL',
+				),
 		}),
 		defineField({
 			name: 'videoLabel',

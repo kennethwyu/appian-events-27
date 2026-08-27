@@ -3,16 +3,17 @@ import { Module } from '@/modules'
 import type { FrontRow } from '@/sanity/types'
 import Img from '@/ui/img'
 import VideoDialog from './video-dialog'
+import youtubeId from './youtube-id'
 
 export default function ({
 	intro,
 	descriptors,
 	image,
-	youtubeId,
+	youtubeId: youtubeIdInput,
 	videoLabel,
 	...props
 }: FrontRow) {
-	const videoId = stegaClean(youtubeId)
+	const videoId = youtubeId(youtubeIdInput)
 
 	return (
 		<Module className="bg-band-base relative isolate overflow-clip" {...props}>
@@ -65,7 +66,7 @@ export default function ({
 						<ul className="gap-intra-xxlg grid lg:grid-cols-4">
 							{descriptors.map((d, i) => (
 								<li key={d._key ?? i} className="gap-intra-medm flex flex-col">
-									<p className="text-h-xsml text-balance">{d.title}</p>
+									<h3 className="text-h-xsml text-balance">{d.title}</h3>
 									{d.body && (
 										<p className="text-p-medm text-heading-on-dark-subtle text-pretty">
 											{d.body}

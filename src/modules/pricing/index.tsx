@@ -1,9 +1,13 @@
 import { PortableText, stegaClean } from 'next-sanity'
+import { endOfDayInZone } from '@/lib/utils'
 import { Module } from '@/modules'
 import type { Pricing } from '@/sanity/types'
 import Check from '@/ui/check'
 import CTAList from '@/ui/cta-list'
 import { marks } from '@/ui/portable-text-marks'
+
+/** Appian World 2027 is in San Diego; "through <date>" means local time. */
+const EVENT_TIMEZONE = 'America/Los_Angeles'
 
 export default function ({
 	intro,
@@ -23,12 +27,12 @@ export default function ({
 	// Evaluated server-side. The page is cached for an hour (see CachedPage), so
 	// the rollover lands within an hour of the cutoff rather than instantly.
 	//
-	// The cutoff is INCLUSIVE. A Sanity date parses as UTC midnight, so comparing
-	// against it directly ends the early bird at the start of that day — a full
-	// day before the "through <date>" copy promises.
+	// The cutoff is INCLUSIVE and anchored to the venue's timezone. A Sanity date
+	// parses as UTC midnight, so comparing against it directly ends the offer a
+	// day early; UTC end-of-day still ends it at 5pm Pacific.
 	const cutoffDate = stegaClean(cutoff)
 	const earlyBirdOver =
-		!!cutoffDate && new Date(`${cutoffDate}T23:59:59.999Z`) < new Date()
+		!!cutoffDate && endOfDayInZone(cutoffDate, EVENT_TIMEZONE) < new Date()
 
 	// `||` not `??`: an emptied string field is not a usable price.
 	const shownPrice = earlyBirdOver ? fullPrice || price : price

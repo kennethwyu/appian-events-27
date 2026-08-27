@@ -30,6 +30,10 @@ export default function ({
 			 * against the section's padding box, which is exactly that edge. */}
 			<div className="section relative flex flex-col py-12 lg:min-h-[1000px] lg:py-30">
 				{stegaClean(showVisual) !== false && (
+					// Width is derived so the left edge stays pinned 656px from the
+					// column's left, as in the artboard (the 544 text column ends at 624).
+					// A fixed 624 overlapped the headline by 148px at ~1100.
+					//
 					// Purely decorative and desktop-only, so it's a background image on a
 					// `hidden lg:block` element rather than an <img>: browsers never fetch
 					// a background on a display:none element, which keeps the 21KB off
@@ -37,7 +41,7 @@ export default function ({
 					// only defers it heuristically.
 					<div
 						aria-hidden
-						className="pointer-events-none absolute top-1/2 right-0 hidden h-[841px] w-[624px] -translate-y-1/2 bg-[url('/hero/visual.svg')] bg-contain bg-no-repeat select-none lg:block"
+						className="pointer-events-none absolute top-1/2 right-0 hidden aspect-[624/841] w-[calc(100%-656px)] max-w-[624px] -translate-y-1/2 bg-[url('/hero/visual.svg')] bg-contain bg-no-repeat select-none lg:block"
 					/>
 				)}
 

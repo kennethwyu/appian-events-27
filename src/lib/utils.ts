@@ -62,3 +62,32 @@ export function getBlockText(
 		}, '') || ''
 	)
 }
+
+/**
+ * The UTC instant at which a wall-clock date ends in a given timezone.
+ *
+ * A Sanity `date` is a bare `YYYY-MM-DD`, which `new Date()` parses as UTC
+ * midnight. Comparing against that directly ends a "through <date>" offer at
+ * the start of the day; using UTC end-of-day still ends it mid-afternoon on the
+ * US west coast. This resolves the zone's real offset for that date, so DST is
+ * handled without a date library.
+ */
+export function endOfDayInZone(date: string, timeZone: string) {
+	const asUtc = new Date(`${date}T23:59:59.999Z`)
+
+	const offset = new Intl.DateTimeFormat('en-US', {
+		timeZone,
+		timeZoneName: 'longOffset',
+	})
+		.formatToParts(asUtc)
+		.find((part) => part.type === 'timeZoneName')?.value // e.g. "GMT-07:00"
+
+	const parsed = offset?.match(/GMT([+-])(\d{2}):(\d{2})/)
+	if (!parsed) return asUtc
+
+	const [, sign, hours, minutes] = parsed
+	const offsetMinutes =
+		(sign === '-' ? -1 : 1) * (Number(hours) * 60 + Number(minutes))
+
+	return new Date(asUtc.getTime() - offsetMinutes * 60_000)
+}

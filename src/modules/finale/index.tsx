@@ -40,9 +40,9 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 							{(feature.title || feature.body) && (
 								<figcaption className="gap-intra-smll lg:p-intra-xxlg flex flex-col lg:absolute lg:inset-x-0 lg:bottom-0">
 									{feature.title && (
-										<p className="text-h-smll max-w-[608px] text-balance">
+										<h3 className="text-h-smll max-w-[608px] text-balance">
 											{feature.title}
-										</p>
+										</h3>
 									)}
 									{feature.body && (
 										<p className="text-p-medm text-heading-on-dark-subtle max-w-[544px] text-pretty">

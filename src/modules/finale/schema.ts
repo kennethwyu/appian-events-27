@@ -56,7 +56,7 @@ export default defineModule({
 			],
 			description:
 				'Exactly four, in mosaic order: tall left, small top-right, small below it, then the wide one underneath.',
-			validation: (Rule) => Rule.max(4),
+			validation: (Rule) => Rule.length(4),
 			group: 'gallery',
 		}),
 	],
