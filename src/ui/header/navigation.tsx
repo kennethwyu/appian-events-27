@@ -2,9 +2,10 @@ import { cn } from '@/lib/utils'
 import type { DynamicFetchOptions } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
 import type { LinkList, Megamenu as MegamenuType } from '@/sanity/types'
-import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
+import type { SanityLinkType } from '@/ui/sanity-link'
 import Dropdown from './dropdown'
 import Megamenu from './megamenu'
+import NavItem from './nav-item'
 
 const topLevelClassName = cn(
 	'text-p-medm grid px-intra-smll leading-tight md:place-content-center md:text-center md:text-balance',
@@ -20,12 +21,9 @@ export default async function ({ perspective, stega }: DynamicFetchOptions) {
 				switch (item._type) {
 					case 'link':
 						return (
-							<SanityLink
+							<NavItem
 								link={item as SanityLinkType}
-								className={cn(
-									topLevelClassName,
-									'text-current hover:underline',
-								)}
+								className={cn(topLevelClassName, 'text-current')}
 								key={`${item._key}-${i}`}
 							/>
 						)

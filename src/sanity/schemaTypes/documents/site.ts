@@ -56,24 +56,6 @@ export default defineType({
 			to: [{ type: 'navigation' }],
 			group: 'navigation',
 		}),
-		defineField({
-			name: 'social',
-			type: 'reference',
-			to: [{ type: 'navigation' }],
-			group: 'navigation',
-		}),
-		defineField({
-			name: 'copyright',
-			type: 'array',
-			of: [
-				{
-					type: 'block',
-					styles: [{ title: 'Normal', value: 'normal' }],
-					lists: [],
-				},
-			],
-			group: 'info',
-		}),
 	],
 	preview: {
 		prepare: () => ({

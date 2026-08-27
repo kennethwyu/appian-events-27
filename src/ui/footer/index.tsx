@@ -8,6 +8,7 @@ import { getSite } from '@/sanity/lib/queries'
 import Logo from '@/ui/logo'
 import { marks } from '@/ui/portable-text-marks'
 import SanityLink, { type SanityLinkType } from '../sanity-link'
+import Navigation from './navigation'
 
 export async function DynamicFooter() {
 	const { perspective, stega } = await getDynamicFetchOptions()
@@ -68,6 +69,14 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 							</ul>
 						)}
 					</div>
+
+					{/* Not in the 2027 comp, but the field exists — render it rather than
+					 * let an editor's links vanish silently. */}
+					{!!site?.footer?.items?.length && (
+						<div className="text-p-medm border-border-on-dark-primary pt-intra-xxlg border-t">
+							<Navigation perspective={perspective} stega={stega} />
+						</div>
+					)}
 				</div>
 			</div>
 		</footer>

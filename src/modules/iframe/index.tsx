@@ -1,29 +1,28 @@
-'use client'
-
-import IframeResizer from '@iframe-resizer/react'
 import { stegaClean } from 'next-sanity'
+import { Module } from '@/modules'
 import type { Iframe } from '@/sanity/types'
+import Resizer from './resizer'
 
 /**
- * Cvent embeds. `checkOrigin={false}` because the Cvent pages are on a
- * different origin and don't post back a whitelist; iframe-resizer still needs
- * its script on the child page to auto-size, so verify each URL before launch.
+ * Cvent embeds. Registration is deliberately NOT embedded — Cvent's
+ * registration flow breaks in an iframe, so /register is a redirect document.
  *
- * Registration is deliberately NOT embedded — Cvent's registration flow breaks
- * in an iframe, so /register is a redirect document instead.
+ * `title` is destructured rather than spread so it can't land on the wrapping
+ * <section> as an HTML title attribute.
  */
-export default function ({ url, title, minHeight = 800 }: Iframe) {
+export default function ({ url, title, minHeight, ...props }: Iframe) {
 	const src = stegaClean(url)
 	if (!src) return null
 
+	const height = Number(stegaClean(minHeight))
+
 	return (
-		<IframeResizer
-			license="GPLv3"
-			src={src}
-			title={stegaClean(title) || 'Embedded page'}
-			checkOrigin={false}
-			className="no-scrollbar w-full"
-			style={{ minHeight: `${stegaClean(minHeight) ?? 800}px` }}
-		/>
+		<Module {...props}>
+			<Resizer
+				src={src}
+				title={stegaClean(title) || 'Embedded page'}
+				minHeight={Number.isFinite(height) && height > 0 ? height : 800}
+			/>
+		</Module>
 	)
 }

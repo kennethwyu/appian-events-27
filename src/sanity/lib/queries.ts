@@ -65,7 +65,6 @@ const SITE_QUERY = groq`*[_type == 'site'][0]{
 	},
 	footer->{ ${NAVIGATION_QUERY} },
 	bottom->{ ${NAVIGATION_QUERY} },
-	social->{ ${NAVIGATION_QUERY} },
 }`
 
 export const GLOBAL_MODULE_EXCLUDE_QUERY = groq`
