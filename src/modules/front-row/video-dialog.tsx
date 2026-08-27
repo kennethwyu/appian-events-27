@@ -46,7 +46,7 @@ export default function VideoDialog({
 					setOpen(true)
 					dialog.current?.showModal()
 				}}
-				className="text-p-medm text-link-on-dark-brand gap-intra-xsml rounded-020 flex w-fit cursor-pointer items-center font-medium hover:underline"
+				className="text-p-medm text-link-on-dark-brand gap-intra-xsml rounded-020 flex w-fit cursor-pointer items-center py-3 font-medium hover:underline lg:py-0"
 			>
 				<Play className="size-4 shrink-0" />
 				{label}

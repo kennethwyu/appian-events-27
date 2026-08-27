@@ -386,7 +386,8 @@ export type LogoWall = {
 	>
 	columns?: 4 | 6
 	rows?: number
-	align?: 'left' | 'center'
+	container?: 'full' | 'narrow'
+	monochrome?: boolean
 	logoType?: 'default' | 'light' | 'dark'
 }
 
@@ -1870,7 +1871,8 @@ export type PAGE_QUERY_RESULT = {
 				}> | null
 				columns?: 4 | 6
 				rows?: number
-				align?: 'center' | 'left'
+				container?: 'full' | 'narrow'
+				monochrome?: boolean
 				logoType?: 'dark' | 'default' | 'light'
 				sidebar: null
 		  }
@@ -2980,7 +2982,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 				}> | null
 				columns?: 4 | 6
 				rows?: number
-				align?: 'center' | 'left'
+				container?: 'full' | 'narrow'
+				monochrome?: boolean
 				logoType?: 'dark' | 'default' | 'light'
 				sidebar: null
 		  }

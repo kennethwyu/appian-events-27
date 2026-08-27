@@ -2643,20 +2643,27 @@
           },
           "optional": true
         },
-        "align": {
+        "container": {
           "type": "objectAttribute",
           "value": {
             "type": "union",
             "of": [
               {
                 "type": "string",
-                "value": "left"
+                "value": "full"
               },
               {
                 "type": "string",
-                "value": "center"
+                "value": "narrow"
               }
             ]
+          },
+          "optional": true
+        },
+        "monochrome": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
           },
           "optional": true
         },

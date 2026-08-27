@@ -55,17 +55,35 @@ export default defineModule({
 			name: 'rows',
 			title: 'Rows per page',
 			type: 'number',
-			description: 'Page size is columns x rows. Set 0 to show every logo.',
+			description:
+				'Page size is columns x rows, desktop only — mobile always shows every logo. Set 0 to disable paging entirely.',
 			initialValue: 3,
 			validation: (Rule) => Rule.min(0).max(12),
 			group: 'options',
 		}),
 		defineField({
-			name: 'align',
-			title: 'Heading alignment',
+			name: 'container',
+			title: 'Content width',
 			type: 'string',
-			options: { list: ['left', 'center'], layout: 'radio' },
-			initialValue: 'left',
+			description:
+				'Full spans the grid (visionaries wall); narrow is a 736 centred column (past sponsors).',
+			options: {
+				list: [
+					{ title: 'Full', value: 'full' },
+					{ title: 'Narrow (736)', value: 'narrow' },
+				],
+				layout: 'radio',
+			},
+			initialValue: 'full',
+			group: 'options',
+		}),
+		defineField({
+			name: 'monochrome',
+			title: 'Render logos white',
+			type: 'boolean',
+			description:
+				'Flattens each logo to a white silhouette so one set of files works on the dark ground. Turn off only if a wall needs full-colour artwork.',
+			initialValue: true,
 			group: 'options',
 		}),
 		defineField({

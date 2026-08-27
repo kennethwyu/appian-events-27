@@ -11,15 +11,22 @@ export type WallLogo = Pick<Logo, '_id' | 'title' | 'image'>
 
 /**
  * Owns the page state. The heading block arrives as `children` so its CTAs stay
- * server-rendered, while the pager can still sit on the same row as the
- * heading — which is where the design puts it, bottom-aligned to the right.
+ * server-rendered, while the pager can still sit on the heading's row — which is
+ * where the design puts it, bottom-aligned to the right.
+ *
+ * Pagination is desktop-only, per the mobile artboards: every logo is in the DOM
+ * and off-page ones are hidden with `lg:hidden`, rather than gating on a JS
+ * media query. That keeps SSR correct at both breakpoints (no hydration flash)
+ * and means mobile shows the full set with nothing unreachable. The hidden
+ * images aren't downloaded either — <Img> leaves `loading` unset, so next/image
+ * lazy-loads and a display:none image is never fetched.
  */
 export default function Wall({
 	logos,
 	columns,
 	perPage,
 	logoType,
-	centred,
+	monochrome,
 	children,
 }: {
 	logos: WallLogo[]
@@ -27,7 +34,8 @@ export default function Wall({
 	/** 0 shows everything and hides the pager. */
 	perPage: number
 	logoType: 'default' | 'light' | 'dark'
-	centred: boolean
+	/** Render logos as white silhouettes (the wall sits on a dark ground). */
+	monochrome: boolean
 	children: React.ReactNode
 }) {
 	const pages = useMemo(() => {
@@ -39,23 +47,23 @@ export default function Wall({
 
 	const [page, setPage] = useState(0)
 	const index = Math.min(page, pages.length - 1)
-	const current = pages[index] ?? []
 	const paged = pages.length > 1
+
+	const entries = useMemo(
+		() =>
+			pages.flatMap((entry, pageIndex) =>
+				entry.map((logo) => ({ logo, pageIndex })),
+			),
+		[pages],
+	)
 
 	return (
 		<div className="gap-intra-huge flex flex-col">
-			<div
-				className={cn(
-					'gap-intra-xxlg flex flex-col',
-					centred
-						? 'items-center'
-						: 'lg:flex-row lg:items-end lg:justify-between',
-				)}
-			>
+			<div className="gap-intra-xxlg flex flex-col lg:flex-row lg:items-end lg:justify-between">
 				{children}
 
 				{paged && (
-					<div className="gap-intra-xlrg flex shrink-0 items-center">
+					<div className="gap-intra-xlrg hidden shrink-0 items-center lg:flex">
 						<PagerButton
 							label="Previous logos"
 							disabled={index === 0}
@@ -80,7 +88,7 @@ export default function Wall({
 				)}
 			</div>
 
-			{/* aria-live so a page change is announced with the new contents. */}
+			{/* aria-live so a desktop page change is announced with the new contents. */}
 			<ul
 				aria-live="polite"
 				className={cn(
@@ -88,21 +96,31 @@ export default function Wall({
 					columns === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-6',
 				)}
 			>
-				{current.map((logo) => {
+				{entries.map(({ logo, pageIndex }) => {
 					const image =
 						logo.image?.[logoType] ?? logo.image?.default ?? logo.image?.light
 
 					return (
 						<li
 							key={logo._id}
-							className="border-overlay-light-20 rounded-030 flex aspect-[160/120] items-center justify-center overflow-clip border"
+							className={cn(
+								'border-overlay-light-20 rounded-030 flex aspect-[160/120] items-center justify-center overflow-clip border',
+								paged && pageIndex !== index && 'lg:hidden',
+							)}
 						>
 							{image?.asset && (
 								<Img
 									image={image}
 									width={200}
 									alt={logo.title ?? ''}
-									className="max-h-[30px] w-auto max-w-[100px] object-contain"
+									className={cn(
+										'max-h-[30px] w-auto max-w-[100px] object-contain',
+										// brightness-0 crushes the artwork to a black silhouette
+										// (alpha survives), then invert makes it pure white.
+										// Unlike grayscale+invert the result doesn't depend on
+										// the source's luminance, so a mixed set stays uniform.
+										monochrome && 'brightness-0 invert',
+									)}
 								/>
 							)}
 						</li>
