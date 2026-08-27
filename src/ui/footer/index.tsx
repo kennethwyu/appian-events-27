@@ -6,9 +6,8 @@ import {
 } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
 import Logo from '@/ui/logo'
-import SocialNavigation from '@/ui/social-navigation'
+import { marks } from '@/ui/portable-text-marks'
 import SanityLink, { type SanityLinkType } from '../sanity-link'
-import Navigation from './navigation'
 
 export async function DynamicFooter() {
 	const { perspective, stega } = await getDynamicFetchOptions()
@@ -19,27 +18,35 @@ export default async function Footer(props: DynamicFetchOptions) {
 	return <CachedFooter {...props} />
 }
 
+/**
+ * The 2027 footer is just a logo, a blurb and one right-aligned link — no
+ * footer nav, no social row, no separate copyright line. Those upstream slots
+ * are left unused rather than rendered empty.
+ */
 async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 	'use cache'
 	const site = await getSite({ perspective, stega })
 	const blurb = site?.footer?.blurb
+	const bottom = site?.bottom?.items
 
 	return (
-		<footer>
-			<div className="section space-y-4">
-				<div className="flex justify-between gap-4 max-md:flex-col md:items-start">
-					<div className="flex flex-col items-center gap-4 max-md:text-center md:items-start">
-						<Logo
-							className="[&_img]:h-[2lh]"
-							perspective={perspective}
-							stega={stega}
-						/>
+		<footer className="text-heading-on-dark-subtle">
+			<div className="section pt-inter-medm pb-inter-medm">
+				<div className="gap-intra-xxlg flex flex-col">
+					<Logo
+						className="[&_img]:h-6"
+						perspective={perspective}
+						stega={stega}
+					/>
 
+					{/* items-end so the link sits on the blurb's last line, as designed. */}
+					<div className="gap-intra-xxlg flex flex-col md:flex-row md:items-end md:justify-between">
 						{blurb && (
-							<div className="prose">
+							<div className="gap-intra-medm text-p-medm [&_strong]:text-heading-on-dark [&_a]:text-heading-on-dark flex max-w-[544px] flex-col text-pretty [&_a]:font-medium [&_a]:hover:underline [&_strong]:font-medium">
 								<PortableText
 									value={blurb}
 									components={{
+										marks,
 										types: {
 											'custom-html': ({ value }) => <CustomHTML {...value} />,
 										},
@@ -48,38 +55,20 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 							</div>
 						)}
 
-						<SocialNavigation
-							className="social [&_svg]:size-lh link flex items-center gap-4 max-md:justify-center"
-							perspective={perspective}
-							stega={stega}
-						/>
-					</div>
-
-					<Navigation perspective={perspective} stega={stega} />
-				</div>
-
-				{(site?.copyright || site?.bottom?.items) && (
-					<div className="flex items-center justify-between gap-4 text-center not-has-[.bottom-navigation]:justify-center max-md:flex-col">
-						{site?.bottom?.items && (
-							<ul className="bottom-navigation flex flex-wrap gap-x-4">
-								{site?.bottom?.items?.map((item, i) => (
+						{!!bottom?.length && (
+							<ul className="gap-intra-xlrg text-p-medm flex shrink-0 flex-wrap">
+								{bottom.map((item, i) => (
 									<li key={`${item._key}-${i}`}>
 										<SanityLink
 											link={item as SanityLinkType}
-											className="text-current hover:underline"
+											className="text-heading-on-dark font-medium hover:underline"
 										/>
 									</li>
 								))}
 							</ul>
 						)}
-
-						{site?.copyright && (
-							<div className="[&_a]:link copyright md:order-first">
-								<PortableText value={site.copyright} />
-							</div>
-						)}
 					</div>
-				)}
+				</div>
 			</div>
 		</footer>
 	)

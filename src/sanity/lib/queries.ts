@@ -53,12 +53,6 @@ const SIDEBAR_QUERY = groq`
 	...,
 	modules[]{
 		...,
-		_type == 'callout' => {
-			ctas[]{
-				...,
-				link{ ${LINK_QUERY} }
-			}
-		}
 	}
 `
 

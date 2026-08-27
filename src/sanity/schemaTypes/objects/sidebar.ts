@@ -17,7 +17,6 @@ export default defineType({
 			name: 'modules',
 			type: 'array',
 			of: [
-				{ type: 'callout' },
 				{ type: 'custom-html' },
 				defineArrayMember({
 					name: 'tableOfContents',

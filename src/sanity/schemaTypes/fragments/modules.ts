@@ -6,7 +6,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 		type: 'array',
 		of: [
 			{ type: 'agenda' },
-			{ type: 'callout' },
+			{ type: 'iframe' },
 			{ type: 'custom-html' },
 			{ type: 'finale' },
 			{ type: 'front-row' },
@@ -16,6 +16,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 			{ type: 'image-gallery' },
 			{ type: 'logo-wall' },
 			{ type: 'pricing' },
+			{ type: 'prefooter' },
 			{ type: 'prose' },
 			{ type: 'quote-list' },
 			{ type: 'stat-list' },
@@ -37,7 +38,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 						name: 'content',
 						of: [
 							'agenda',
-							'callout',
+							'iframe',
 							'finale',
 							'front-row',
 							'hero',
@@ -46,6 +47,7 @@ export default ({ of = [] }: { of?: Array<{ type: string }> } = {}) =>
 							'image-gallery',
 							'logo-wall',
 							'pricing',
+							'prefooter',
 							'prose',
 							'quote-list',
 							'stat-list',

@@ -1,6 +1,5 @@
 import { stegaClean } from 'next-sanity'
 import { cn } from '@/lib/utils'
-import Callout from '@/modules/callout'
 import CustomHTML from '@/modules/custom-html'
 import type { Sidebar } from '@/sanity/types'
 import TableOfContents, { type ToCHeadings } from './table-of-contents'
@@ -28,15 +27,6 @@ export default function ({
 		>
 			{modules?.map((module, i) => {
 				switch (module._type) {
-					case 'callout':
-						return (
-							<Callout
-								key={`${module._key}-${i}`}
-								{...module}
-								className="p-0"
-							/>
-						)
-
 					case 'custom-html':
 						return <CustomHTML key={`${module._key}-${i}`} {...module} />
 

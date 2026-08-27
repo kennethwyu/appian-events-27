@@ -1,15 +1,16 @@
 import type { Get } from '@sanity/codegen'
 import { stegaClean } from 'next-sanity'
 import Agenda from '@/modules/agenda'
-import Callout from '@/modules/callout'
 import CustomHTML from '@/modules/custom-html'
 import Finale from '@/modules/finale'
 import FrontRow from '@/modules/front-row'
 import Hero from '@/modules/hero'
 import HeroCover from '@/modules/hero.cover'
 import HeroSplit from '@/modules/hero.split'
+import Iframe from '@/modules/iframe'
 import ImageGallery from '@/modules/image-gallery'
 import LogoWall from '@/modules/logo-wall'
+import Prefooter from '@/modules/prefooter'
 import Pricing from '@/modules/pricing'
 import Prose from '@/modules/prose'
 import QuoteList from '@/modules/quote-list'
@@ -19,7 +20,7 @@ import type { ModuleAttributes, PAGE_QUERY_RESULT } from '@/sanity/types'
 
 const MODULES_MAP = {
 	agenda: Agenda,
-	callout: Callout,
+	iframe: Iframe,
 	'custom-html': CustomHTML,
 	finale: Finale,
 	'front-row': FrontRow,
@@ -29,6 +30,7 @@ const MODULES_MAP = {
 	'image-gallery': ImageGallery,
 	'logo-wall': LogoWall,
 	pricing: Pricing,
+	prefooter: Prefooter,
 	prose: Prose,
 	'quote-list': QuoteList,
 	'stat-list': StatList,

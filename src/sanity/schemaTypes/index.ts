@@ -1,15 +1,16 @@
 import type { SchemaPluginOptions } from 'sanity'
 // modules
 import agenda from '@/modules/agenda/schema'
-import callout from '@/modules/callout/schema'
 import customHtml from '@/modules/custom-html/schema'
 import finale from '@/modules/finale/schema'
 import frontRow from '@/modules/front-row/schema'
 import heroCover from '@/modules/hero.cover/schema'
 import heroSplit from '@/modules/hero.split/schema'
 import hero from '@/modules/hero/schema'
+import iframe from '@/modules/iframe/schema'
 import imageGallery from '@/modules/image-gallery/schema'
 import logoWall from '@/modules/logo-wall/schema'
+import prefooter from '@/modules/prefooter/schema'
 import pricing from '@/modules/pricing/schema'
 import prose from '@/modules/prose/schema'
 import quoteList from '@/modules/quote-list/schema'
@@ -57,7 +58,7 @@ export const schema: SchemaPluginOptions = {
 
 		// modules
 		agenda,
-		callout,
+		iframe,
 		customHtml,
 		finale,
 		frontRow,
@@ -67,6 +68,7 @@ export const schema: SchemaPluginOptions = {
 		imageGallery,
 		logoWall,
 		pricing,
+		prefooter,
 		prose,
 		quoteList,
 		statList,

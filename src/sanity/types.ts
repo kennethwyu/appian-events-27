@@ -64,7 +64,7 @@ export type DayImage = {
 
 export type FeatureImage = {
 	asset?: SanityImageAssetReference
-	media?: unknown // Unable to locate the referenced type "feature.image.media" in schema
+	media?: unknown // Unable to locate the referenced type "image.media" in schema
 	hotspot?: SanityImageHotspot
 	crop?: SanityImageCrop
 	alt?: string
@@ -321,6 +321,18 @@ export type Prose = {
 		  } & CustomHtml)
 	>
 	sidebar?: Sidebar
+}
+
+export type Prefooter = {
+	_type: 'prefooter'
+	attributes?: ModuleAttributes
+	intro?: string
+	body?: string
+	ctas?: Array<
+		{
+			_key: string
+		} & Cta
+	>
 }
 
 export type Pricing = {
@@ -593,48 +605,12 @@ export type CustomHtml = {
 	className?: string
 }
 
-export type Callout = {
-	_type: 'callout'
+export type Iframe = {
+	_type: 'iframe'
 	attributes?: ModuleAttributes
-	eyebrow?: string
-	intro?: Array<
-		| {
-				children?: Array<{
-					marks?: Array<string>
-					text?: string
-					_type: 'span'
-					_key: string
-				}>
-				style?:
-					'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
-				listItem?: 'bullet' | 'number'
-				markDefs?: Array<{
-					href?: string
-					_type: 'link'
-					_key: string
-				}>
-				level?: number
-				_type: 'block'
-				_key: string
-		  }
-		| {
-				asset?: SanityImageAssetReference
-				media?: unknown
-				hotspot?: SanityImageHotspot
-				crop?: SanityImageCrop
-				alt?: string
-				_type: 'image'
-				_key: string
-		  }
-		| ({
-				_key: string
-		  } & CustomHtml)
-	>
-	ctas?: Array<
-		{
-			_key: string
-		} & Cta
-	>
+	url?: string
+	title?: string
+	minHeight?: number
 }
 
 export type Agenda = {
@@ -692,9 +668,6 @@ export type Sidebar = {
 	_type: 'sidebar'
 	position?: 'left' | 'right'
 	modules?: Array<
-		| ({
-				_key: string
-		  } & Callout)
 		| ({
 				_key: string
 		  } & CustomHtml)
@@ -909,7 +882,7 @@ export type GlobalModule = {
 		  } & Agenda)
 		| ({
 				_key: string
-		  } & Callout)
+		  } & Iframe)
 		| ({
 				_key: string
 		  } & CustomHtml)
@@ -937,6 +910,9 @@ export type GlobalModule = {
 		| ({
 				_key: string
 		  } & Pricing)
+		| ({
+				_key: string
+		  } & Prefooter)
 		| ({
 				_key: string
 		  } & Prose)
@@ -956,7 +932,7 @@ export type GlobalModule = {
 		  } & Agenda)
 		| ({
 				_key: string
-		  } & Callout)
+		  } & Iframe)
 		| ({
 				_key: string
 		  } & CustomHtml)
@@ -984,6 +960,9 @@ export type GlobalModule = {
 		| ({
 				_key: string
 		  } & Pricing)
+		| ({
+				_key: string
+		  } & Prefooter)
 		| ({
 				_key: string
 		  } & Prose)
@@ -1012,7 +991,7 @@ export type Page = {
 		  } & Agenda)
 		| ({
 				_key: string
-		  } & Callout)
+		  } & Iframe)
 		| ({
 				_key: string
 		  } & CustomHtml)
@@ -1040,6 +1019,9 @@ export type Page = {
 		| ({
 				_key: string
 		  } & Pricing)
+		| ({
+				_key: string
+		  } & Prefooter)
 		| ({
 				_key: string
 		  } & Prose)
@@ -1327,6 +1309,7 @@ export type AllSanitySchemaTypes =
 	| QuoteReference
 	| QuoteList
 	| Prose
+	| Prefooter
 	| Pricing
 	| LogoReference
 	| LogoWall
@@ -1337,7 +1320,7 @@ export type AllSanitySchemaTypes =
 	| FrontRow
 	| Finale
 	| CustomHtml
-	| Callout
+	| Iframe
 	| Agenda
 	| Table
 	| Sidebar
@@ -1374,7 +1357,7 @@ export type AllSanitySchemaTypes =
 
 // Source: src/app/(frontend)/[[...slug]]/page.tsx
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		'modules': (			// global moddules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// global moddules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		)	}
+// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		'modules': (			// global moddules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// global moddules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		)	}
 export type PAGE_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
@@ -1434,80 +1417,6 @@ export type PAGE_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
-				_type: 'callout'
-				attributes?: ModuleAttributes
-				eyebrow?: string
-				intro?: Array<
-					| ({
-							_key: string
-					  } & CustomHtml)
-					| {
-							children?: Array<{
-								marks?: Array<string>
-								text?: string
-								_type: 'span'
-								_key: string
-							}>
-							style?:
-								| 'blockquote'
-								| 'h1'
-								| 'h2'
-								| 'h3'
-								| 'h4'
-								| 'h5'
-								| 'h6'
-								| 'normal'
-							listItem?: 'bullet' | 'number'
-							markDefs?: Array<{
-								href?: string
-								_type: 'link'
-								_key: string
-							}>
-							level?: number
-							_type: 'block'
-							_key: string
-					  }
-					| {
-							asset?: SanityImageAssetReference
-							media?: unknown
-							hotspot?: SanityImageHotspot
-							crop?: SanityImageCrop
-							alt?: string
-							_type: 'image'
-							_key: string
-					  }
-				>
-				ctas: Array<{
-					_key: string
-					_type: 'cta'
-					link:
-						| {
-								_type: 'link'
-								label?: string
-								type?: 'external' | 'internal'
-								internal?: PageReference
-								external?: string
-								params?: string
-						  }
-						| {
-								_type: 'link'
-								label?: string
-								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
-								external?: string
-								params?: string
-						  }
-						| null
-					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
-				}> | null
-				sidebar: null
-		  }
-		| {
-				_key: string
 				_type: 'custom-html'
 				attributes?: ModuleAttributes
 				html?: Code
@@ -1546,7 +1455,7 @@ export type PAGE_QUERY_RESULT = {
 							metadata: SanityImageMetadata | null
 							source?: SanityAssetSourceData
 						} | null
-						media?: unknown // Unable to locate the referenced type "feature.image.media" in schema
+						media?: unknown // Unable to locate the referenced type "image.media" in schema
 						hotspot?: SanityImageHotspot
 						crop?: SanityImageCrop
 						alt?: string
@@ -1845,6 +1754,16 @@ export type PAGE_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'iframe'
+				attributes?: ModuleAttributes
+				url?: string
+				title?: string
+				minHeight?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'image-gallery'
 				attributes?: ModuleAttributes
 				eyebrow?: string
@@ -1972,6 +1891,41 @@ export type PAGE_QUERY_RESULT = {
 				rows?: number
 				align?: 'center' | 'left'
 				logoType?: 'dark' | 'default' | 'light'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'prefooter'
+				attributes?: ModuleAttributes
+				intro?: string
+				body?: string
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: PageReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal: {
+									_type: 'page'
+									title: string | null
+									slug: string | '/' | null
+								} | null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
 				sidebar: null
 		  }
 		| {
@@ -2214,79 +2168,6 @@ export type PAGE_QUERY_RESULT = {
 					_type: 'sidebar'
 					position?: 'left' | 'right'
 					modules: Array<
-						| {
-								_key: string
-								_type: 'callout'
-								attributes?: ModuleAttributes
-								eyebrow?: string
-								intro?: Array<
-									| ({
-											_key: string
-									  } & CustomHtml)
-									| {
-											children?: Array<{
-												marks?: Array<string>
-												text?: string
-												_type: 'span'
-												_key: string
-											}>
-											style?:
-												| 'blockquote'
-												| 'h1'
-												| 'h2'
-												| 'h3'
-												| 'h4'
-												| 'h5'
-												| 'h6'
-												| 'normal'
-											listItem?: 'bullet' | 'number'
-											markDefs?: Array<{
-												href?: string
-												_type: 'link'
-												_key: string
-											}>
-											level?: number
-											_type: 'block'
-											_key: string
-									  }
-									| {
-											asset?: SanityImageAssetReference
-											media?: unknown
-											hotspot?: SanityImageHotspot
-											crop?: SanityImageCrop
-											alt?: string
-											_type: 'image'
-											_key: string
-									  }
-								>
-								ctas: Array<{
-									_key: string
-									_type: 'cta'
-									link:
-										| {
-												_type: 'link'
-												label?: string
-												type?: 'external' | 'internal'
-												internal?: PageReference
-												external?: string
-												params?: string
-										  }
-										| {
-												_type: 'link'
-												label?: string
-												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
-												external?: string
-												params?: string
-										  }
-										| null
-									theme?: 'action-outline' | 'action' | 'ghost' | 'link'
-								}> | null
-						  }
 						| {
 								_key: string
 								_type: 'custom-html'
@@ -2586,7 +2467,7 @@ export type OG_QUERY_RESULT =
 
 // Source: src/app/(frontend)/not-found.tsx
 // Variable: NOT_FOUND_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == '404'][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	}
+// Query: *[_type == 'page' && metadata.slug.current == '404'][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,	} },		_type == 'agenda' => {		days[]{			...,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'finale' => {		feature{			...,			image{				...,				asset->{					...,					metadata				}			}		},		gallery[]{			...,			asset->{				...,				metadata			}		}	},		_type == 'front-row' => {		image{			...,			asset->{				...,				metadata			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-wall' => {		logos[]->{			_id,			title,			image		},		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},		_type == 'pricing' => {		note{			...,			body[]{				...,				markDefs[]{					...,					_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	}
 export type NOT_FOUND_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
@@ -2646,80 +2527,6 @@ export type NOT_FOUND_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
-				_type: 'callout'
-				attributes?: ModuleAttributes
-				eyebrow?: string
-				intro?: Array<
-					| ({
-							_key: string
-					  } & CustomHtml)
-					| {
-							children?: Array<{
-								marks?: Array<string>
-								text?: string
-								_type: 'span'
-								_key: string
-							}>
-							style?:
-								| 'blockquote'
-								| 'h1'
-								| 'h2'
-								| 'h3'
-								| 'h4'
-								| 'h5'
-								| 'h6'
-								| 'normal'
-							listItem?: 'bullet' | 'number'
-							markDefs?: Array<{
-								href?: string
-								_type: 'link'
-								_key: string
-							}>
-							level?: number
-							_type: 'block'
-							_key: string
-					  }
-					| {
-							asset?: SanityImageAssetReference
-							media?: unknown
-							hotspot?: SanityImageHotspot
-							crop?: SanityImageCrop
-							alt?: string
-							_type: 'image'
-							_key: string
-					  }
-				>
-				ctas: Array<{
-					_key: string
-					_type: 'cta'
-					link:
-						| {
-								_type: 'link'
-								label?: string
-								type?: 'external' | 'internal'
-								internal?: PageReference
-								external?: string
-								params?: string
-						  }
-						| {
-								_type: 'link'
-								label?: string
-								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
-								external?: string
-								params?: string
-						  }
-						| null
-					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
-				}> | null
-				sidebar: null
-		  }
-		| {
-				_key: string
 				_type: 'custom-html'
 				attributes?: ModuleAttributes
 				html?: Code
@@ -2758,7 +2565,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 							metadata: SanityImageMetadata | null
 							source?: SanityAssetSourceData
 						} | null
-						media?: unknown // Unable to locate the referenced type "feature.image.media" in schema
+						media?: unknown // Unable to locate the referenced type "image.media" in schema
 						hotspot?: SanityImageHotspot
 						crop?: SanityImageCrop
 						alt?: string
@@ -3057,6 +2864,16 @@ export type NOT_FOUND_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'iframe'
+				attributes?: ModuleAttributes
+				url?: string
+				title?: string
+				minHeight?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'image-gallery'
 				attributes?: ModuleAttributes
 				eyebrow?: string
@@ -3184,6 +3001,41 @@ export type NOT_FOUND_QUERY_RESULT = {
 				rows?: number
 				align?: 'center' | 'left'
 				logoType?: 'dark' | 'default' | 'light'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'prefooter'
+				attributes?: ModuleAttributes
+				intro?: string
+				body?: string
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: PageReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal: {
+									_type: 'page'
+									title: string | null
+									slug: string | '/' | null
+								} | null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
 				sidebar: null
 		  }
 		| {
@@ -3426,79 +3278,6 @@ export type NOT_FOUND_QUERY_RESULT = {
 					_type: 'sidebar'
 					position?: 'left' | 'right'
 					modules: Array<
-						| {
-								_key: string
-								_type: 'callout'
-								attributes?: ModuleAttributes
-								eyebrow?: string
-								intro?: Array<
-									| ({
-											_key: string
-									  } & CustomHtml)
-									| {
-											children?: Array<{
-												marks?: Array<string>
-												text?: string
-												_type: 'span'
-												_key: string
-											}>
-											style?:
-												| 'blockquote'
-												| 'h1'
-												| 'h2'
-												| 'h3'
-												| 'h4'
-												| 'h5'
-												| 'h6'
-												| 'normal'
-											listItem?: 'bullet' | 'number'
-											markDefs?: Array<{
-												href?: string
-												_type: 'link'
-												_key: string
-											}>
-											level?: number
-											_type: 'block'
-											_key: string
-									  }
-									| {
-											asset?: SanityImageAssetReference
-											media?: unknown
-											hotspot?: SanityImageHotspot
-											crop?: SanityImageCrop
-											alt?: string
-											_type: 'image'
-											_key: string
-									  }
-								>
-								ctas: Array<{
-									_key: string
-									_type: 'cta'
-									link:
-										| {
-												_type: 'link'
-												label?: string
-												type?: 'external' | 'internal'
-												internal?: PageReference
-												external?: string
-												params?: string
-										  }
-										| {
-												_type: 'link'
-												label?: string
-												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
-												external?: string
-												params?: string
-										  }
-										| null
-									theme?: 'action-outline' | 'action' | 'ghost' | 'link'
-								}> | null
-						  }
 						| {
 								_key: string
 								_type: 'custom-html'
@@ -6895,9 +6674,9 @@ export type GLOBAL_MODULE_PATH_QUERY_RESULT = never
 
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"\n\t*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global moddules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// global moddules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t)\n\t}\n": PAGE_QUERY_RESULT
+		"\n\t*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global moddules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// global moddules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t)\n\t}\n": PAGE_QUERY_RESULT
 		"*[_type == $type && metadata.slug.current == $slug][0]{\n\t'title': coalesce(metadata.title, title),\n}": OG_QUERY_RESULT
-		"\n\t*[_type == 'page' && metadata.slug.current == '404'][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
+		"\n\t*[_type == 'page' && metadata.slug.current == '404'][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t}\n },\n\t\n\t_type == 'agenda' => {\n\t\tdays[]{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'finale' => {\n\t\tfeature{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tgallery[]{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'front-row' => {\n\t\timage{\n\t\t\t...,\n\t\t\tasset->{\n\t\t\t\t...,\n\t\t\t\tmetadata\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-wall' => {\n\t\tlogos[]->{\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\timage\n\t\t},\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t}\n,\n\t\n\t_type == 'pricing' => {\n\t\tnote{\n\t\t\t...,\n\t\t\tbody[]{\n\t\t\t\t...,\n\t\t\t\tmarkDefs[]{\n\t\t\t\t\t...,\n\t\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
 		"*[_type == 'site'][0]{\n\t...,\n\theader->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tfooter->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tbottom->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tsocial->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n}": SITE_QUERY_RESULT
 		'\n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n': GLOBAL_MODULE_EXCLUDE_QUERY_RESULT
 		'\n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n': GLOBAL_MODULE_PATH_QUERY_RESULT
