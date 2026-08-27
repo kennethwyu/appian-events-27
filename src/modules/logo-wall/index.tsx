@@ -39,12 +39,16 @@ export default function ({
 						}
 						monochrome={stegaClean(monochrome) !== false}
 					>
-						{/* The heading column is 544 in the artboard, so the heading wraps
-						 * rather than running the full width of the section. */}
+						{/* On the full-width wall the heading column is 544 in the artboard,
+						 * so the heading wraps rather than running the whole section. The
+						 * narrow wall's heading spans its own 736 column, which needs
+						 * flex-1 — left to shrink-wrap it wrapped early. Walls with a CTA
+						 * rather than a body sit 32 below the heading, not 16. */}
 						<div
 							className={cn(
-								'gap-intra-lrge flex flex-col',
-								narrow ? 'max-w-full' : 'max-w-[544px]',
+								'flex flex-col',
+								body ? 'gap-intra-lrge' : 'gap-intra-xxlg',
+								narrow ? 'flex-1' : 'max-w-[544px]',
 							)}
 						>
 							{intro && <h2 className="text-h-medm text-balance">{intro}</h2>}

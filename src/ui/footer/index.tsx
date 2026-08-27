@@ -32,7 +32,7 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 
 	return (
 		<footer className="text-heading-on-dark-subtle">
-			<div className="section pt-inter-medm pb-inter-medm">
+			<div className="section pt-intra-xxxl pb-16">
 				<div className="gap-intra-xxlg flex flex-col">
 					<Logo
 						className="[&_img]:h-6"

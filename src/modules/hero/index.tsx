@@ -64,7 +64,7 @@ export default function ({
 					</div>
 
 					{hasEventInfo && (
-						<div className="border-overlay-light-40 gap-intra-xxlg pl-intra-xxlg flex flex-col border-l">
+						<div className="border-overlay-light-40 gap-intra-xxlg pl-intra-lrge lg:pl-intra-xxlg flex flex-col border-l">
 							{(eventDate || eventLocation) && (
 								<div className="gap-intra-xsml flex flex-col">
 									{eventDate && (
