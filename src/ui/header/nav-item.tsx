@@ -6,7 +6,8 @@ import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
 
 /**
  * Client leaf so `usePathname` doesn't force the whole nav (and the site fetch
- * behind it) onto the client. The design underlines the current item.
+ * behind it) onto the client. The design marks the current item with a 2px rule
+ * on the header's bottom edge plus a brighter, heavier label.
  */
 export default function NavItem({
 	link,
@@ -35,8 +36,10 @@ export default function NavItem({
 			className={cn(
 				className,
 				'border-b-2 transition-colors',
+				// The artboard's active item: white label at 550 over a 2px
+				// border-on-light-primary rule. Inactive is the subtle grey at 400.
 				current
-					? 'border-heading-on-dark'
+					? 'border-border-on-light-primary text-heading-on-dark font-medium'
 					: 'hover:border-overlay-light-40 border-transparent',
 			)}
 		/>

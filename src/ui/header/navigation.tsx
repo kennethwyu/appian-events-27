@@ -8,22 +8,25 @@ import Megamenu from './megamenu'
 import NavItem from './nav-item'
 
 const topLevelClassName = cn(
-	'text-p-medm grid px-intra-smll leading-tight md:place-content-center md:text-center md:text-balance',
-	'py-[.5ch] md:py-0',
+	'text-p-smll text-heading-on-dark-subtle grid px-intra-smll md:place-content-center md:text-center md:text-balance',
+	'py-[.5ch] max-md:leading-tight md:py-0',
 )
 
 export default async function ({ perspective, stega }: DynamicFetchOptions) {
 	const site = await getSite({ perspective, stega })
 
+	// The nav is h-15 at md so each item is the artboard's 60-tall box, centred
+	// in the 64 header (2..62). That's what puts the active item's 2px underline
+	// on the header's bottom edge rather than directly under the label.
 	return (
-		<nav className="gap-intra-lrge flex items-stretch [grid-area:navigation] max-md:my-4 max-md:flex-col">
+		<nav className="gap-intra-lrge flex items-stretch [grid-area:navigation] max-md:my-4 max-md:flex-col md:h-15">
 			{site?.header?.items?.map((item, i) => {
 				switch (item._type) {
 					case 'link':
 						return (
 							<NavItem
 								link={item as SanityLinkType}
-								className={cn(topLevelClassName, 'text-current')}
+								className={topLevelClassName}
 								key={`${item._key}-${i}`}
 							/>
 						)
