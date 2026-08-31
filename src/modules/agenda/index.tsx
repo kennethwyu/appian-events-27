@@ -15,12 +15,23 @@ export default function ({ intro, days, ...props }: Agenda) {
 
 				{/* Mobile is a snap track (per the 360 artboard); desktop is a 3-up grid.
 				 * Negative margin lets the track bleed to the viewport edge while the
-				 * first card still lines up with the grid margin. */}
-				<ul className="no-scrollbar -mx-grid-margin-mobile gap-intra-lrge px-grid-margin-mobile lg:gap-intra-xxlg flex snap-x snap-mandatory overflow-x-auto lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
+				 * first card still lines up with the grid margin.
+				 *
+				 * scroll-px is what actually preserves that gutter: the snapport is the
+				 * padding box, so without it snap-mandatory aligns card 1 to the
+				 * bled-out border edge and rests at scrollLeft 24 with the card flush
+				 * against the viewport. Insetting the snapport by the same 24 makes
+				 * scrollLeft 0 the resting snap and keeps the gutter on both ends.
+				 * overscroll-x-contain stops a horizontal swipe chaining to the page
+				 * (and to the browser's back gesture). */}
+				<ul className="no-scrollbar -mx-grid-margin-mobile gap-intra-lrge px-grid-margin-mobile scroll-px-grid-margin-mobile lg:gap-intra-xxlg flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
 					{days.map((day, i) => (
 						<li
 							key={day._key ?? i}
-							className="gap-intra-medm flex w-[calc(100%-2.5rem)] max-w-[352px] shrink-0 snap-start flex-col lg:w-auto lg:max-w-none"
+							// 312 at 360 — the artboard's card width. The next card's 8px
+							// peek comes from the track bleeding past the right gutter,
+							// not from undersizing this one.
+							className="gap-intra-medm flex w-full max-w-[352px] shrink-0 snap-start flex-col lg:w-auto lg:max-w-none"
 						>
 							{day.image?.asset && (
 								<Img
