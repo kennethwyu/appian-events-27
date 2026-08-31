@@ -66,9 +66,12 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 								</div>
 							)}
 
+							{/* The artboard's header CTA is the DS small variant — p-xsml
+							 * (12/16) on 16 of padding, giving 176x40 — not the p-smll
+							 * (14/24) on 24 that body and hero CTAs take from action-base. */}
 							<CTAList
 								ctas={site?.ctas as Cta[]}
-								className="max-sm:w-full max-sm:*:w-full"
+								className="[&_.action]:px-intra-lrge [&_.action]:text-p-xsml max-sm:w-full max-sm:*:w-full [&_.action]:font-medium"
 							/>
 						</div>
 					</div>

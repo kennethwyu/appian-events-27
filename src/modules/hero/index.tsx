@@ -85,7 +85,7 @@ export default function ({
 				{(hasTagline || !!stats?.length) && (
 					<div className="gap-intra-xxlg lg:mt-inter-xlrg relative mt-10 flex max-w-[544px] flex-col">
 						{hasTagline && (
-							<p className="text-p-lrge text-heading-on-dark-subtle gap-intra-smll flex items-start">
+							<p className="text-p-lrge text-heading-on-dark-subtle gap-intra-smll lg:gap-intra-medm flex items-start">
 								<Star boxed className="mt-1.5 size-5 shrink-0" />
 								<span>
 									{taglineLead}{' '}
