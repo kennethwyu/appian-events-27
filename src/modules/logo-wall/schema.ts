@@ -56,7 +56,7 @@ export default defineModule({
 			title: 'Rows per page',
 			type: 'number',
 			description:
-				'Page size is columns x rows, desktop only — mobile always shows every logo. Set 0 to disable paging entirely.',
+				'Desktop page size is columns x rows; mobile always pages in 12s (6 rows x 2 columns), per the artboard. Set 0 to disable paging at both widths.',
 			initialValue: 3,
 			validation: (Rule) => Rule.min(0).max(12),
 			group: 'options',
