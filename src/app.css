@@ -4,7 +4,10 @@
 @theme {
 	/* Page-level roles, mapped onto the Appian tokens in tokens.css. */
 	/* The 2027 design is dark throughout; modules opt into light surfaces. */
-	--color-background: var(--color-page);
+	/* Both artboards sit on band-scrim (#020731), not page (#010528) — sampled
+	 * from the hero and front-row renders at both breakpoints. Mapping this at
+	 * `page` left a visible step wherever a section painted its own ground. */
+	--color-background: var(--color-band-scrim);
 	--color-foreground: var(--color-body-on-dark);
 	--color-stroke: var(--color-border-on-dark-primary);
 	--color-primary: var(--color-interactive-primary);
@@ -13,15 +16,17 @@
 	--spacing-ch: 1ch;
 }
 
-/* Hero backdrop. Figma paints #010528 with a 0.6-opacity radial on top;
- * the stops below have that 0.6 pre-blended against the base. */
+/* Hero backdrop, desktop only — the mobile artboard's hero is a flat ground
+ * with no radial at all. Figma paints the band-scrim ground with a
+ * 0.6-opacity radial on top; the stops below have that 0.6 pre-blended
+ * against it, so the outermost stop is the ground itself. */
 @utility hero-gradient {
-	background-color: #010528;
+	background-color: #020731;
 	background-image: radial-gradient(
 		ellipse 100% 100% at 100% 100%,
 		#050755 0%,
 		#03063e 50%,
-		#010528 100%
+		#020731 100%
 	);
 }
 
@@ -48,12 +53,13 @@
 	}
 
 	@keyframes anchored-heading {
-
 		0%,
 		50% {
-			background-color: color-mix(in oklab,
-					var(--color-amber-400) 50%,
-					transparent);
+			background-color: color-mix(
+				in oklab,
+				var(--color-amber-400) 50%,
+				transparent
+			);
 		}
 	}
 
@@ -82,7 +88,8 @@
 		display: grid;
 		grid-template-rows: auto 0fr;
 		align-content: start;
-		transition: grid-template-rows var(--details-duration) var(--default-transition-timing-function);
+		transition: grid-template-rows var(--details-duration)
+			var(--default-transition-timing-function);
 
 		&::details-content {
 			content-visibility: visible;
@@ -90,11 +97,11 @@
 			min-block-size: 0;
 		}
 
-		>:not(summary) {
+		> :not(summary) {
 			transition: visibility var(--details-duration);
 		}
 
-		&:not(:is([open], :open))>:not(summary) {
+		&:not(:is([open], :open)) > :not(summary) {
 			visibility: hidden;
 		}
 
@@ -104,10 +111,9 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-
 		details,
 		details::details-content,
-		details>:not(summary) {
+		details > :not(summary) {
 			transition-duration: 0s;
 		}
 	}
@@ -175,7 +181,7 @@
 	justify-content: center;
 	text-align: center;
 	@apply gap-intra-smll h-button-cta-height rounded-020 px-intra-xlrg text-p-smll font-medium;
-	@apply active:scale-98 transition-all;
+	@apply transition-all active:scale-98;
 }
 
 @utility action {
@@ -199,26 +205,26 @@
 	@apply bg-background border-foreground/10 focus-within:border-foreground/30 border leading-normal;
 
 	&:focus {
-		@apply outline-none ring-3 ring-primary/20 border-primary;
+		@apply ring-primary/20 border-primary ring-3 outline-none;
 	}
 }
 
 @utility focus-ring {
-	@apply outline-2 outline-dashed outline-offset-2 outline-primary z-1;
+	@apply outline-primary z-1 outline-2 outline-offset-2 outline-dashed;
 }
 
 @utility skip-link {
 	@apply action-base bg-background text-foreground sr-only;
 
 	&:focus {
-		@apply not-sr-only fixed top-4 left-4 focus-ring z-100;
+		@apply focus-ring not-sr-only fixed top-4 left-4 z-100;
 	}
 }
 
 /* components */
 
 @utility section {
-	@apply mx-auto w-full max-w-[1280px] px-grid-margin-mobile py-12 lg:px-grid-margin-desktop;
+	@apply px-grid-margin-mobile lg:px-grid-margin-desktop mx-auto w-full max-w-[1280px] py-12;
 }
 
 @utility prose {
@@ -252,7 +258,7 @@
 		list-style: revert;
 		padding-left: 1.5em;
 
-		&>li>ol {
+		& > li > ol {
 			list-style: lower-alpha;
 		}
 	}
@@ -265,7 +271,7 @@
 		@apply border-stroke border-l-4 pl-4;
 	}
 
-	:not(pre)>code {
+	:not(pre) > code {
 		padding-inline: 0.25em;
 		font-size: 0.875em;
 		@apply bg-foreground/5 rounded-sm;
@@ -304,7 +310,7 @@
 	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;
 
-	@apply *:md:snap-start *:snap-center;
+	@apply *:snap-center *:md:snap-start;
 }
 
 @utility carousel-scroll-buttons {
@@ -326,13 +332,15 @@
 		&::scroll-button(left) {
 			content: '' / 'Scroll left';
 			position-area: center start;
-			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z'/%3E%3C/svg%3E") center / cover;
+			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z'/%3E%3C/svg%3E")
+				center / cover;
 		}
 
 		&::scroll-button(right) {
 			content: '' / 'Scroll right';
 			position-area: center end;
-			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm-40 326.63L193.37 352l96-96-96-96L216 137.37 334.63 256z'/%3E%3C/svg%3E") center / cover;
+			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm-40 326.63L193.37 352l96-96-96-96L216 137.37 334.63 256z'/%3E%3C/svg%3E")
+				center / cover;
 		}
 	}
 }
@@ -351,7 +359,7 @@
 		gap: 0.5ch;
 	}
 
-	&>* {
+	& > * {
 		&::scroll-marker {
 			content: '';
 			@apply bg-foreground/25 block size-1 rounded-full;
@@ -364,7 +372,7 @@
 }
 
 @utility accordion {
-	&>summary {
+	& > summary {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -375,8 +383,8 @@
 		}
 	}
 
-	&:open>summary svg {
-		rotate: .5turn;
+	&:open > summary svg {
+		rotate: 0.5turn;
 	}
 }
 
@@ -388,26 +396,33 @@
 	> :not(summary) {
 		position-anchor: var(--anchor-name);
 		position-area: end span-end;
-		position-try-fallbacks: end span-start, flip-block;
-		position-try: end span-start, flip-block;
+		position-try-fallbacks:
+			end span-start,
+			flip-block;
+		position-try:
+			end span-start,
+			flip-block;
 
-		transition: var(--default-transition-duration) var(--default-transition-timing-function);
+		transition: var(--default-transition-duration)
+			var(--default-transition-timing-function);
 		transition-property: opacity, translate, scale, visibility;
 
-		@apply fixed z-1 min-w-max bg-background shadow-lg origin-top;
+		@apply bg-background fixed z-1 min-w-max origin-top shadow-lg;
 	}
 
-	&:not(:open)>:not(summary) {
+	&:not(:open) > :not(summary) {
 		@apply -translate-y-1 scale-95 opacity-0;
 	}
 }
 
 @utility skeleton {
 	background-size: 200% 100%;
-	background-image: linear-gradient(to right,
-			color-mix(in oklab, var(--color-foreground) 10%, transparent),
-			color-mix(in oklab, var(--color-foreground) 5%, transparent),
-			color-mix(in oklab, var(--color-foreground) 10%, transparent));
+	background-image: linear-gradient(
+		to right,
+		color-mix(in oklab, var(--color-foreground) 10%, transparent),
+		color-mix(in oklab, var(--color-foreground) 5%, transparent),
+		color-mix(in oklab, var(--color-foreground) 10%, transparent)
+	);
 	animation: skeleton 1.2s linear infinite;
 
 	@apply block h-lh;
@@ -443,7 +458,8 @@
 /* anims */
 
 @utility anim-fade {
-	transition: var(--default-transition-duration) var(--default-transition-timing-function);
+	transition: var(--default-transition-duration)
+		var(--default-transition-timing-function);
 	transition-property: opacity, translate, scale;
 	@apply starting:opacity-0;
 }
@@ -465,10 +481,11 @@
 }
 
 @utility anim-toggle {
-	transition: var(--default-transition-duration) var(--default-transition-timing-function);
+	transition: var(--default-transition-duration)
+		var(--default-transition-timing-function);
 	transition-property: opacity, translate, scale, visibility;
 
-	:where(details:not(:open))>& {
+	:where(details:not(:open)) > & {
 		@apply -translate-y-4 opacity-0;
 	}
 }

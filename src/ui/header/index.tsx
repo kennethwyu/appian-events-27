@@ -29,14 +29,14 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 	const blurb = site?.header?.blurb
 
 	return (
-		<Wrapper className="layout-header bg-page max-md:header-open:shadow-xl text-heading-on-dark border-border-on-dark-primary sticky top-0 z-10 border-b transition-colors">
+		<Wrapper className="layout-header bg-background max-md:header-open:shadow-xl text-heading-on-dark border-border-on-dark-primary sticky top-0 z-10 border-b transition-colors">
 			<div
 				className={cn(
 					css.root,
 					'section grid items-center gap-x-4 py-0 max-md:max-h-svh max-md:overflow-y-auto md:h-16 md:gap-x-8',
 				)}
 			>
-				<div className="max-md:header-open:bg-page sticky top-0 z-1 flex items-center justify-between gap-4 py-4 [grid-area:top] md:py-0">
+				<div className="max-md:header-open:bg-background sticky top-0 z-1 flex items-center justify-between gap-4 py-4 [grid-area:top] md:py-0">
 					<Logo
 						className="max-w-max grow [&_img]:h-6"
 						perspective={perspective}

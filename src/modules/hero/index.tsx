@@ -22,7 +22,7 @@ export default function ({
 
 	return (
 		<Module
-			className="hero-gradient text-heading-on-dark relative overflow-clip"
+			className="lg:hero-gradient text-heading-on-dark relative overflow-clip"
 			{...props}
 		>
 			{/* Figma places the visual flush to the 1280 frame's right edge, outside

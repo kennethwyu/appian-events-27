@@ -30,8 +30,14 @@ export default function ({
 	const videoId = youtubeId(youtubeIdInput)
 	const label = stegaClean(videoLabel) || 'Watch the recap'
 
+	// The band ground is desktop-only: the mobile artboard's front-row has no
+	// fill of its own and sits on the page ground, so painting band-base at
+	// every width put a hard step between the hero and this section.
 	return (
-		<Module className="bg-band-base relative isolate overflow-clip" {...props}>
+		<Module
+			className="lg:bg-band-base relative isolate overflow-clip"
+			{...props}
+		>
 			{/* Desktop media: full-bleed photo plus the design's two scrims. Hidden
 			 * below lg — <Img> lazy-loads, so a display:none photo isn't fetched. */}
 			<div className="hidden lg:block">
@@ -60,7 +66,7 @@ export default function ({
 				<div className="lg:hidden">
 					<div
 						aria-hidden
-						className="aspect-[312/420] w-[312px] max-w-full bg-[url('/hero/visual-mobile.svg')] bg-contain bg-no-repeat"
+						className="relative z-10 aspect-[312/420] w-[312px] max-w-full bg-[url('/hero/visual-mobile.svg')] bg-contain bg-no-repeat"
 					/>
 
 					<div className="-mx-grid-margin-mobile relative -mt-[69px] aspect-3/2">
