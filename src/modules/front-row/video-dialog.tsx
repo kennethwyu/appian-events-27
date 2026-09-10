@@ -29,6 +29,7 @@ export default function VideoDialog({
 	label: string
 }) {
 	const dialog = useRef<HTMLDialogElement>(null)
+	const downOnBackdrop = useRef(false)
 	const [open, setOpen] = useState(false)
 
 	// Unmount the player on close so playback actually stops.
@@ -55,14 +56,20 @@ export default function VideoDialog({
 			</button>
 
 			{/* Backdrop click closes: ::backdrop is part of the dialog box, so a click
-			 * out there targets the dialog; content clicks target a descendant. */}
+			 * out there targets the dialog; content clicks target a descendant. The
+			 * pointerdown has to have landed there too, or dragging a player slider
+			 * and releasing outside would close mid-scrub. */}
 			<dialog
 				ref={dialog}
 				aria-label={label}
-				onClick={(e) => {
-					if (e.target === e.currentTarget) dialog.current?.close()
+				onPointerDown={(e) => {
+					downOnBackdrop.current = e.target === e.currentTarget
 				}}
-				className="bg-page/90 p-intra-lrge open:gap-intra-smll m-auto w-full max-w-5xl backdrop:bg-black/70 open:flex open:flex-col"
+				onClick={(e) => {
+					if (e.target === e.currentTarget && downOnBackdrop.current)
+						dialog.current?.close()
+				}}
+				className="bg-background/90 p-intra-lrge open:gap-intra-smll m-auto w-full max-w-5xl backdrop:bg-black/70 open:flex open:flex-col"
 			>
 				{/* showModal() gives focus trapping and Esc for free, but no visible way
 				 * out. The DS uses its Icon Button with icon-delete here. */}

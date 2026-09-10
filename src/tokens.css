@@ -55,8 +55,8 @@
 	/* background/surface/light-secondary */
 	--color-surface-light-secondary: #f6f7f8;
 
-	/* Not DS variables — 2027 design fills. */
-	--color-page: #010528;
+	/* Not DS variables — 2027 design fills. Both artboards ground on band-scrim;
+	 * band-base is the desktop front-row band only. */
 	--color-band-base: #020f31;
 	--color-band-scrim: #020731;
 	--color-quote-card-from: #1b204b99; /* rgba(27,32,75,0.6) */

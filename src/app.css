@@ -18,11 +18,11 @@
  * Linear falloff on a 500px circle, measured off the artboard. The outer stop
  * is the ground, so the bloom can't band against the sections either side. */
 @utility hero-gradient {
-	background-color: #020731;
+	background-color: var(--color-band-scrim);
 	background-image: radial-gradient(
 		circle 500px at 50% 100%,
 		#010951 0%,
-		#020731 100%
+		var(--color-band-scrim) 100%
 	);
 }
 
