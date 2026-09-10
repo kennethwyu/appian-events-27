@@ -32,11 +32,8 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 
 	return (
 		<footer className="text-heading-on-dark-subtle">
-			{/* The rule sits on the inner column, not the section, because the
-			 * artboard runs it the content width (1120) rather than full bleed —
-			 * unlike the header's, which spans the viewport. The section's top
-			 * padding moves inside it so the rule lands on the footer's top edge
-			 * with the logo 40 below, as drawn. */}
+			{/* The rule runs the content width, not full bleed like the header's, so
+			 * it sits on the inner column with the top padding moved inside it. */}
 			<div className="section pt-0 pb-16">
 				<div className="border-border-on-dark-primary gap-intra-xxlg pt-intra-xxxl flex flex-col border-t">
 					<Logo

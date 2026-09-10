@@ -2,11 +2,8 @@ import { clsx, type ClassValue } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
 
 /**
- * The DS font-size utilities (`text-p-smll`, `text-h-medm`, …) are shaped like
- * colour utilities, so a stock twMerge puts them in the same conflict group as
- * `text-heading-on-dark` and silently drops whichever comes first. The header
- * nav was rendering at the inherited 16px instead of p-smll for exactly this
- * reason. Declaring the sizes keeps the two groups apart.
+ * The DS font-size utilities look like colour utilities, so a stock twMerge
+ * groups them with `text-heading-on-dark` and drops whichever comes first.
  */
 const twMerge = extendTailwindMerge({
 	extend: {

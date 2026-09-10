@@ -30,15 +30,11 @@ export default function ({
 			className={cn('relative', art && 'isolate overflow-x-clip')}
 			{...props}
 		>
-			{/* The spread is 1601 wide against a 1280 artboard, so at natural size,
-			 * centred, the two motifs land exactly where they're drawn — bleeding in
-			 * from either edge. It starts 67 below the wall's content (179 from the
-			 * section top, past the 112 of padding) and is deliberately taller than
-			 * this section, carrying on behind the transparent prefooter.
-			 *
-			 * Desktop only: the mobile artboards don't carry it, and at 360 both
-			 * motifs would sit off-screen anyway. `hidden` also means the browser
-			 * never fetches the 31KB background there. */}
+			{/* The spread is 1601 wide against a 1280 artboard, so centred at natural
+			 * size the motifs land where they are drawn, bleeding in from either edge.
+			 * Taller than the section on purpose, carrying on behind the prefooter.
+			 * Desktop only — the mobile artboards omit it, and `hidden` keeps the
+			 * 31KB background unfetched there. */}
 			{art && (
 				<div
 					aria-hidden
@@ -60,11 +56,9 @@ export default function ({
 						}
 						monochrome={stegaClean(monochrome) !== false}
 					>
-						{/* On the full-width wall the heading column is 544 in the artboard,
-						 * so the heading wraps rather than running the whole section. The
-						 * narrow wall's heading spans its own 736 column, which needs
-						 * flex-1 — left to shrink-wrap it wrapped early. Walls with a CTA
-						 * rather than a body sit 32 below the heading, not 16. */}
+						{/* The full-width wall caps the heading at the artboard 544; the narrow one
+						 * spans its 736 column, which needs flex-1 or it wraps early. A CTA sits
+						 * 32 below the heading where a body sits 16. */}
 						<div
 							className={cn(
 								'flex flex-col',

@@ -30,9 +30,8 @@ export default function ({
 	const videoId = youtubeId(youtubeIdInput)
 	const label = stegaClean(videoLabel) || 'Watch the recap'
 
-	// The band ground is desktop-only: the mobile artboard's front-row has no
-	// fill of its own and sits on the page ground, so painting band-base at
-	// every width put a hard step between the hero and this section.
+	// The band ground is desktop-only — the mobile artboard has no fill of its
+	// own there, so painting it at every width stepped against the hero.
 	return (
 		<Module
 			className="lg:bg-band-base relative isolate overflow-clip"
@@ -64,6 +63,8 @@ export default function ({
 			<div className="section gap-intra-xxlg pb-intra-xxlg relative flex flex-col pt-8 lg:min-h-[689px] lg:pt-[388px]">
 				{/* Mobile media, in flow. */}
 				<div className="lg:hidden">
+					{/* z-10 so the node leg lands over the stage still, as drawn — the
+					 * photo pull-up below would otherwise clip it flat. */}
 					<div
 						aria-hidden
 						className="relative z-10 aspect-[312/420] w-[312px] max-w-full bg-[url('/hero/visual-mobile.svg')] bg-contain bg-no-repeat"

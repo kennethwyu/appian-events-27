@@ -4,9 +4,7 @@
 @theme {
 	/* Page-level roles, mapped onto the Appian tokens in tokens.css. */
 	/* The 2027 design is dark throughout; modules opt into light surfaces. */
-	/* Both artboards sit on band-scrim (#020731), not page (#010528) — sampled
-	 * from the hero and front-row renders at both breakpoints. Mapping this at
-	 * `page` left a visible step wherever a section painted its own ground. */
+	/* Both artboards sit on band-scrim, not page. */
 	--color-background: var(--color-band-scrim);
 	--color-foreground: var(--color-body-on-dark);
 	--color-stroke: var(--color-border-on-dark-primary);
@@ -16,15 +14,9 @@
 	--spacing-ch: 1ch;
 }
 
-/* Hero backdrop, desktop only — the mobile artboard's hero is a flat ground
- * with no radial at all.
- *
- * A bloom rising from the bottom centre, per the designer's revised mockup
- * (it used to come from the bottom-right corner). Sampled off that render:
- * both the vertical and horizontal profiles reach the ground at exactly 500
- * from the origin, and the midpoint sits at r=250, so it's a plain linear
- * falloff on a 500px circle. The outermost stop is the ground itself, so the
- * bloom can't band against the sections either side. */
+/* Hero backdrop, desktop only — the mobile artboard's hero is flat ground.
+ * Linear falloff on a 500px circle, measured off the artboard. The outer stop
+ * is the ground, so the bloom can't band against the sections either side. */
 @utility hero-gradient {
 	background-color: #020731;
 	background-image: radial-gradient(
@@ -188,9 +180,8 @@
 	@apply transition-all active:scale-98;
 }
 
-/* Hover matches appian.com's primary CTA: the solid fill is overlaid with a
- * left-to-right gradient running dark navy -> Appian blue. Gradients can't be
- * interpolated, so this swaps instantly, as it does on the main site. */
+/* Hover overlays the fill with a dark-navy -> Appian blue gradient, matching
+ * appian.com's primary CTA. Gradients don't interpolate, so it swaps instantly. */
 @utility action {
 	@apply action-base bg-interactive-primary text-link-on-dark;
 

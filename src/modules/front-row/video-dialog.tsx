@@ -54,9 +54,8 @@ export default function VideoDialog({
 				{label}
 			</button>
 
-			{/* Clicking the backdrop closes. `showModal`'s ::backdrop is part of the
-			 * dialog's own box, so a click out there targets the dialog element
-			 * itself; anything inside the content targets a descendant. */}
+			{/* Backdrop click closes: ::backdrop is part of the dialog box, so a click
+			 * out there targets the dialog; content clicks target a descendant. */}
 			<dialog
 				ref={dialog}
 				aria-label={label}
@@ -65,9 +64,8 @@ export default function VideoDialog({
 				}}
 				className="bg-page/90 p-intra-lrge open:gap-intra-smll m-auto w-full max-w-5xl backdrop:bg-black/70 open:flex open:flex-col"
 			>
-				{/* showModal() gives focus trapping and Esc for free, but not a visible
-				 * way out — pointer users need this. The DS uses its Icon Button with
-				 * icon-delete here, the same component as the logo-wall pagers. */}
+				{/* showModal() gives focus trapping and Esc for free, but no visible way
+				 * out. The DS uses its Icon Button with icon-delete here. */}
 				<IconButton
 					label="Close video"
 					onClick={() => dialog.current?.close()}

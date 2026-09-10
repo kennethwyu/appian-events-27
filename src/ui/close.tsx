@@ -1,5 +1,4 @@
-/** DS `icon-delete`, drawn in the iconography's house style: 16 grid, stroked
- * at 1.33 with round caps. Used as the modal dismiss. */
+/** DS `icon-delete` — 16 grid, stroked at 1.33 with round caps. */
 export default function Close({ className }: { className?: string }) {
 	return (
 		<svg

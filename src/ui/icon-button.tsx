@@ -1,11 +1,8 @@
 import { cn } from '@/lib/utils'
 
 /**
- * The DS's `Button / Icon Button` — a 40 square with a 1px overlay border and
- * radius-020. One component in the design system, so one here: the logo-wall
- * pagers and the video modal's dismiss both use it.
- *
- * Disabled keeps the not-allowed cursor but drops the hover fill, per QA.
+ * The DS's `Button / Icon Button`, shared by the logo-wall pagers and the
+ * video modal's dismiss. Disabled keeps the cursor but drops the hover fill.
  */
 export default function IconButton({
 	label,

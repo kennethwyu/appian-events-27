@@ -1,9 +1,7 @@
 /**
- * The designer's `icon-star-duo` asset, used to flag the highlighted agenda
- * topic. Stroked rather than filled (unlike `star.tsx`), so it takes
- * `currentColor` on the stroke and the export's hardcoded #1B1D22 is dropped.
- * Drawn on a 16 grid with ~2 of padding, so render it at size-4 to get the
- * artboard's 12 of visible ink.
+ * The designer's `icon-star-duo`, flagging the highlighted agenda topic.
+ * Stroked rather than filled (unlike `star.tsx`). Drawn on a 16 grid with ~2
+ * of padding, so size-4 gives the artboard's 12 of visible ink.
  */
 export default function StarDuo({ className }: { className?: string }) {
 	return (

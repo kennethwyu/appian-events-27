@@ -10,23 +10,18 @@ import Img from '@/ui/img'
 /** The subset of `logo` the wall query projects. */
 export type WallLogo = Pick<Logo, '_id' | 'title' | 'image'>
 
-/** 6 rows x 2 columns, per the mobile artboards. */
+/** Mobile page size, per the artboards (6 rows x 2 cols at 360). */
 const MOBILE_PER_PAGE = 12
 
 /**
- * Owns the page state. The heading block arrives as `children` so its CTAs stay
- * server-rendered, while the desktop pager can still sit on the heading's row —
- * which is where the design puts it, bottom-aligned to the right. Mobile pages
- * in 12s and puts a full-width pager below the grid instead.
+ * Owns the page state; the heading arrives as `children` so its CTAs stay
+ * server-rendered under the desktop pager on the heading row.
  *
- * The two breakpoints therefore partition the same logos differently (29 logos
- * is 2 desktop pages of 18 but 3 mobile pages of 12), so a logo's page index
- * depends on the viewport. Rather than resolve that with a JS media query —
- * which would force one partition into the server render and flash the other on
- * hydration — every logo carries *both* indices and hides against whichever one
- * applies at that width: `lg:hidden` when it's off the current desktop page,
- * `max-lg:hidden` when it's off the current mobile page. Each breakpoint keeps
- * its own independent page state, and both are correct in SSR.
+ * The breakpoints partition the same logos differently, so a logo's page index
+ * depends on the viewport. A JS media query would bake one partition into the
+ * server render and flash the other on hydration, so every logo carries both
+ * indices and hides against whichever applies at that width — independent page
+ * state per breakpoint, both correct in SSR.
  */
 export default function Wall({
 	logos,
@@ -123,9 +118,7 @@ export default function Wall({
 				})}
 			</ul>
 
-			{/* The mobile pager is a full-width bar under the grid — buttons at the
-			 * extremes, count centred between them — not the desktop's compact
-			 * right-aligned cluster on the heading row. */}
+			{/* Mobile: a full-width bar under the grid, buttons at the extremes. */}
 			{mobilePages > 1 && (
 				<div className="flex items-center justify-between lg:hidden">
 					<Pager

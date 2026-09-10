@@ -54,16 +54,10 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 						</figure>
 					)}
 
-					{/* The 360 artboard makes the four gallery images one swipe track of
-					 * equal 312x234 cards, where desktop is the mosaic (tall, two
-					 * stacked smalls, wide beneath). Rather than duplicate the markup
-					 * per breakpoint — which would risk fetching both sets — the two
-					 * mosaic wrappers go `display: contents` below lg, so their children
-					 * flatten into direct children of the track and the DOM stays
-					 * single-source. Each image then carries the mobile aspect with the
-					 * desktop one behind an lg: variant. */}
-					{/* The track gap is 16 between the mobile cards, 32 between the
-					 * mosaic's rows at lg. */}
+					{/* The 360 artboard makes the four images one swipe track of equal
+					 * 312x234 cards, gap 16; desktop is the mosaic, gap 32. The two
+					 * mosaic wrappers take `display: contents` below lg so their children
+					 * flatten into the track, rather than duplicating the markup. */}
 					{!!gallery?.length && (
 						<div className="no-scrollbar -mx-grid-margin-mobile gap-intra-lrge px-grid-margin-mobile scroll-px-grid-margin-mobile lg:gap-intra-xxlg flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
 							<div className="lg:gap-intra-xxlg contents lg:grid lg:grid-cols-2">

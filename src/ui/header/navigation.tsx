@@ -15,9 +15,8 @@ const topLevelClassName = cn(
 export default async function ({ perspective, stega }: DynamicFetchOptions) {
 	const site = await getSite({ perspective, stega })
 
-	// The nav is h-15 at md so each item is the artboard's 60-tall box, centred
-	// in the 64 header (2..62). That's what puts the active item's 2px underline
-	// on the header's bottom edge rather than directly under the label.
+	// h-15 at md makes each item the artboard's 60-tall box, centred in the 64
+	// header, which puts the active underline on the header's bottom edge.
 	return (
 		<nav className="gap-intra-lrge flex items-stretch [grid-area:navigation] max-md:my-4 max-md:flex-col md:h-15">
 			{site?.header?.items?.map((item, i) => {
