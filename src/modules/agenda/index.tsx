@@ -1,7 +1,7 @@
 import { Module } from '@/modules'
 import type { Agenda } from '@/sanity/types'
 import Img from '@/ui/img'
-import Star from '@/ui/star'
+import StarDuo from '@/ui/star-duo'
 
 export default function ({ intro, days, ...props }: Agenda) {
 	if (!days?.length) return null
@@ -61,7 +61,7 @@ export default function ({ intro, days, ...props }: Agenda) {
 											className="gap-intra-smll flex items-start"
 										>
 											{topic.highlight && (
-												<Star className="text-sync-cyan mt-1.5 size-3 shrink-0" />
+												<StarDuo className="text-sync-cyan mt-1 size-4 shrink-0" />
 											)}
 											<span className={topic.highlight ? 'font-medium' : ''}>
 												{topic.title}

@@ -9,6 +9,8 @@ import {
 	DefaultVideoLayout,
 } from '@vidstack/react/player/layouts/default'
 import { useEffect, useRef, useState } from 'react'
+import Close from '@/ui/close'
+import IconButton from '@/ui/icon-button'
 import Play from '@/ui/play'
 
 /**
@@ -52,20 +54,27 @@ export default function VideoDialog({
 				{label}
 			</button>
 
+			{/* Clicking the backdrop closes. `showModal`'s ::backdrop is part of the
+			 * dialog's own box, so a click out there targets the dialog element
+			 * itself; anything inside the content targets a descendant. */}
 			<dialog
 				ref={dialog}
 				aria-label={label}
+				onClick={(e) => {
+					if (e.target === e.currentTarget) dialog.current?.close()
+				}}
 				className="bg-page/90 p-intra-lrge open:gap-intra-smll m-auto w-full max-w-5xl backdrop:bg-black/70 open:flex open:flex-col"
 			>
 				{/* showModal() gives focus trapping and Esc for free, but not a visible
-				 * way out — pointer users need this. */}
-				<button
-					type="button"
+				 * way out — pointer users need this. The DS uses its Icon Button with
+				 * icon-delete here, the same component as the logo-wall pagers. */}
+				<IconButton
+					label="Close video"
 					onClick={() => dialog.current?.close()}
-					className="text-p-smll text-heading-on-dark-subtle hover:text-heading-on-dark self-end font-medium"
+					className="self-end"
 				>
-					Close
-				</button>
+					<Close className="size-4" />
+				</IconButton>
 
 				{open && (
 					<MediaPlayer

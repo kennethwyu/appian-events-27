@@ -42,6 +42,10 @@
 
 	/* background/interactive/* */
 	--color-interactive-primary: var(--color-appian-blue);
+	/* background/interactive/primary-hover. The DS variable exists but its value
+	 * isn't resolvable over MCP, so this is sampled off appian.com's hero CTA,
+	 * which QA named as the reference. */
+	--color-interactive-primary-hover: #071088;
 
 	/* border/on-*-background/* */
 	--color-border-on-light-primary: var(--color-neutral-300);

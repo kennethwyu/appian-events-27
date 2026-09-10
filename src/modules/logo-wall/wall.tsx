@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { cn } from '@/lib/utils'
 import type { Logo } from '@/sanity/types'
 import Chevron from '@/ui/chevron'
+import IconButton from '@/ui/icon-button'
 import Img from '@/ui/img'
 
 /** The subset of `logo` the wall query projects. */
@@ -153,13 +154,13 @@ function Pager({
 }) {
 	return (
 		<>
-			<PagerButton
+			<IconButton
 				label="Previous logos"
 				disabled={index === 0}
 				onClick={() => onChange(index - 1)}
 			>
 				<Chevron direction="left" className="size-4" />
-			</PagerButton>
+			</IconButton>
 
 			<p
 				className={cn(
@@ -171,37 +172,13 @@ function Pager({
 				{index + 1} / {count}
 			</p>
 
-			<PagerButton
+			<IconButton
 				label="More logos"
 				disabled={index === count - 1}
 				onClick={() => onChange(index + 1)}
 			>
 				<Chevron className="size-4" />
-			</PagerButton>
+			</IconButton>
 		</>
-	)
-}
-
-function PagerButton({
-	label,
-	disabled,
-	onClick,
-	children,
-}: {
-	label: string
-	disabled: boolean
-	onClick: () => void
-	children: React.ReactNode
-}) {
-	return (
-		<button
-			type="button"
-			aria-label={label}
-			disabled={disabled}
-			onClick={onClick}
-			className="border-overlay-light-20 rounded-020 text-heading-on-dark hover:bg-overlay-light-20 flex size-10 shrink-0 cursor-pointer items-center justify-center border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-		>
-			{children}
-		</button>
 	)
 }

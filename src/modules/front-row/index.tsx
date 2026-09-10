@@ -79,7 +79,7 @@ export default function ({
 							/>
 						)}
 						{videoId && (
-							<div className="left-grid-margin-mobile absolute bottom-16">
+							<div className="left-grid-margin-mobile absolute bottom-0">
 								<VideoDialog youtubeId={videoId} label={label} />
 							</div>
 						)}
