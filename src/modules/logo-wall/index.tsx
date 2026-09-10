@@ -15,6 +15,7 @@ export default function ({
 	container,
 	logoType,
 	monochrome,
+	sideArt,
 	...props
 }: LogoWall) {
 	if (!logos?.length) return null
@@ -22,9 +23,29 @@ export default function ({
 	const cols = Number(stegaClean(columns)) === 4 ? 4 : 6
 	const rowCount = Number(stegaClean(rows) ?? 3)
 	const narrow = stegaClean(container) === 'narrow'
+	const art = stegaClean(sideArt) === true
 
 	return (
-		<Module {...props}>
+		<Module
+			className={cn('relative', art && 'isolate overflow-x-clip')}
+			{...props}
+		>
+			{/* The spread is 1601 wide against a 1280 artboard, so at natural size,
+			 * centred, the two motifs land exactly where they're drawn — bleeding in
+			 * from either edge. It starts 67 below the wall's content (179 from the
+			 * section top, past the 112 of padding) and is deliberately taller than
+			 * this section, carrying on behind the transparent prefooter.
+			 *
+			 * Desktop only: the mobile artboards don't carry it, and at 360 both
+			 * motifs would sit off-screen anyway. `hidden` also means the browser
+			 * never fetches the 31KB background there. */}
+			{art && (
+				<div
+					aria-hidden
+					className="pointer-events-none absolute top-[179px] left-1/2 -z-10 hidden h-[863px] w-[1601px] -translate-x-1/2 bg-[url('/decor/nodes-spread.svg')] bg-no-repeat lg:block"
+				/>
+			)}
+
 			<div className="section pt-inter-xlrg pb-0">
 				{/* The past-sponsors wall is a 736 centred column in the artboard;
 				 * the visionaries wall spans the full grid. */}

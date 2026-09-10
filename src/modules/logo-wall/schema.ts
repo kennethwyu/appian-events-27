@@ -78,6 +78,15 @@ export default defineModule({
 			group: 'options',
 		}),
 		defineField({
+			name: 'sideArt',
+			title: 'Isometric side art',
+			type: 'boolean',
+			description:
+				'Bleeds the node motif in from the left and right edges behind the wall, as on the past-sponsors section. Desktop only — the mobile artboards do not carry it.',
+			initialValue: false,
+			group: 'options',
+		}),
+		defineField({
 			name: 'monochrome',
 			title: 'Render logos white',
 			type: 'boolean',

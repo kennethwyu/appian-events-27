@@ -2660,6 +2660,13 @@
           },
           "optional": true
         },
+        "sideArt": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "monochrome": {
           "type": "objectAttribute",
           "value": {

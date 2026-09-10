@@ -387,6 +387,7 @@ export type LogoWall = {
 	columns?: 4 | 6
 	rows?: number
 	container?: 'full' | 'narrow'
+	sideArt?: boolean
 	monochrome?: boolean
 	logoType?: 'default' | 'light' | 'dark'
 }
@@ -1872,6 +1873,7 @@ export type PAGE_QUERY_RESULT = {
 				columns?: 4 | 6
 				rows?: number
 				container?: 'full' | 'narrow'
+				sideArt?: boolean
 				monochrome?: boolean
 				logoType?: 'dark' | 'default' | 'light'
 				sidebar: null
@@ -2983,6 +2985,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 				columns?: 4 | 6
 				rows?: number
 				container?: 'full' | 'narrow'
+				sideArt?: boolean
 				monochrome?: boolean
 				logoType?: 'dark' | 'default' | 'light'
 				sidebar: null
