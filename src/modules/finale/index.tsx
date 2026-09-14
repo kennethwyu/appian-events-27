@@ -6,7 +6,9 @@ import Img, { Source } from '@/ui/img'
 const MOBILE_MEDIA = '(width < 1024px)'
 
 /** `contents` so the <img> stays the flex/grid item and keeps its layout
- * classes; the <picture> only carries the art-directed mobile source. */
+ * classes; the <picture> only carries the art-directed mobile source. <source>
+ * has no UA `display: none`, so `contents` would otherwise promote it to a
+ * sibling grid/flex item and shift everything by one cell. */
 function Art({
 	image,
 	width,
@@ -17,7 +19,7 @@ function Art({
 	className: string
 }) {
 	return (
-		<picture className="contents">
+		<picture className="contents [&>source]:hidden">
 			<Source image={image.mobile} width={624} media={MOBILE_MEDIA} />
 			<Img
 				image={image}
