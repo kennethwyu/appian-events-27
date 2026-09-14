@@ -6,9 +6,8 @@ import Img, { Source } from '@/ui/img'
 const MOBILE_MEDIA = '(width < 1024px)'
 
 /** `contents` so the <img> stays the flex/grid item and keeps its layout
- * classes; the <picture> only carries the art-directed mobile source. <source>
- * has no UA `display: none`, so `contents` would otherwise promote it to a
- * sibling grid/flex item and shift everything by one cell. */
+ * classes. <source> has no UA `display: none`, so it must be hidden or
+ * `contents` promotes it to a sibling item and shifts the mosaic a cell. */
 function Art({
 	image,
 	width,

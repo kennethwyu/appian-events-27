@@ -45,9 +45,8 @@ export default defineConfig({
 		media(),
 	],
 	document: {
-		// Global modules are hidden from the structure, so keep them out of the
-		// create menu as well — otherwise one can be made with nowhere to find it,
-		// and PAGE_QUERY would still inject it.
+		// Hidden from the structure, so keep it out of the create menu too — one
+		// could otherwise be made with nowhere to find it, and still injected.
 		newDocumentOptions: (prev) =>
 			prev.filter((template) => template.templateId !== 'global-module'),
 	},

@@ -7,11 +7,9 @@ import { singleton } from './lib/builders'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 //
-// Global modules and page Directories are omitted: this site is one page plus
-// iframe shells, so there are no global modules and no nested slugs for
-// Directories to group. `lib/page-directories.ts` is kept for the Europe and
-// Gov builds. Global modules are also filtered out of the create menu in
-// sanity.config.ts, so the type can't be made without a home to find it in.
+// Global modules and Directories are omitted: none exist, and no page slug is
+// nested. page-directories.ts is kept for Europe/Gov; global-module is also
+// filtered out of the create menu in sanity.config.ts.
 export default structureTool({
 	structure: (S) =>
 		S.list()
