@@ -4,13 +4,27 @@ import { PiConfetti } from 'react-icons/pi'
 import { count } from '@/lib/utils'
 import defineModule from '@/sanity/schemaTypes/fragments/define-module'
 
+// Art direction, not a resize: the mosaic's slots are portrait and 160x116 on
+// desktop but all 4:3 on the mobile track, so each image carries both crops and
+// a <picture> media query picks one.
 const image = (name: string) =>
 	defineField({
 		name,
 		type: 'image',
 		icon: ImageIcon,
 		options: { hotspot: true, metadata: ['lqip'] },
-		fields: [defineField({ name: 'alt', type: 'string' })],
+		fields: [
+			defineField({ name: 'alt', type: 'string' }),
+			defineField({
+				name: 'mobile',
+				title: 'Mobile crop (4:3)',
+				type: 'image',
+				description:
+					'Used below 1024, where the mosaic becomes a 4:3 swipe track. Falls back to the main image.',
+				icon: ImageIcon,
+				options: { hotspot: true, metadata: ['lqip'] },
+			}),
+		],
 	})
 
 export default defineModule({

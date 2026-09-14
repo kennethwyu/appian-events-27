@@ -10,6 +10,13 @@ export const FINALE_QUERY = groq`
 				asset->{
 					...,
 					metadata
+				},
+				mobile{
+					...,
+					asset->{
+						...,
+						metadata
+					}
 				}
 			}
 		},
@@ -18,6 +25,13 @@ export const FINALE_QUERY = groq`
 			asset->{
 				...,
 				metadata
+			},
+			mobile{
+				...,
+				asset->{
+					...,
+					metadata
+				}
 			}
 		}
 	}

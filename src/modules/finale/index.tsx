@@ -1,6 +1,35 @@
 import { Module } from '@/modules'
 import type { Finale } from '@/sanity/types'
-import Img from '@/ui/img'
+import Img, { Source } from '@/ui/img'
+
+/** Matches the lg: variants below, where the mosaic becomes the 4:3 track. */
+const MOBILE_MEDIA = '(width < 1024px)'
+
+/**
+ * `contents` so the <img> stays the flex/grid item and keeps the layout classes
+ * — <picture> is only here to carry the art-directed mobile source.
+ */
+function Art({
+	image,
+	width,
+	className,
+}: {
+	image: any
+	width: number
+	className: string
+}) {
+	return (
+		<picture className="contents">
+			<Source image={image.mobile} width={624} media={MOBILE_MEDIA} />
+			<Img
+				image={image}
+				width={width}
+				alt={image.alt ?? ''}
+				className={className}
+			/>
+		</picture>
+	)
+}
 
 export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 	const [tall, smallTop, smallBottom, wide] = gallery ?? []
@@ -27,10 +56,9 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 					 * flow underneath instead. */}
 					{feature?.image?.asset && (
 						<figure className="gap-intra-lrge flex flex-col lg:relative lg:isolate lg:block">
-							<Img
+							<Art
 								image={feature.image}
 								width={1472}
-								alt={feature.image.alt ?? ''}
 								className="rounded-030 aspect-[736/560] w-full object-cover"
 							/>
 							<div
@@ -62,10 +90,9 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 						<div className="no-scrollbar -mx-grid-margin-mobile gap-intra-lrge px-grid-margin-mobile scroll-px-grid-margin-mobile lg:gap-intra-xxlg flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
 							<div className="lg:gap-intra-xxlg contents lg:grid lg:grid-cols-2">
 								{tall?.asset && (
-									<Img
+									<Art
 										image={tall}
 										width={640}
-										alt={tall.alt ?? ''}
 										className="rounded-030 aspect-4/3 w-full shrink-0 snap-start object-cover lg:aspect-[160/264] lg:size-full"
 									/>
 								)}
@@ -73,11 +100,10 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 									{[smallTop, smallBottom].map(
 										(img, i) =>
 											img?.asset && (
-												<Img
+												<Art
 													key={img._key ?? i}
 													image={img}
 													width={640}
-													alt={img.alt ?? ''}
 													className="rounded-030 aspect-4/3 w-full shrink-0 snap-start object-cover lg:aspect-[160/116]"
 												/>
 											),
@@ -85,10 +111,9 @@ export default function ({ badge, intro, feature, gallery, ...props }: Finale) {
 								</div>
 							</div>
 							{wide?.asset && (
-								<Img
+								<Art
 									image={wide}
 									width={704}
-									alt={wide.alt ?? ''}
 									className="rounded-030 aspect-4/3 w-full shrink-0 snap-start object-cover"
 								/>
 							)}

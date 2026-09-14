@@ -327,6 +327,14 @@
           },
           "optional": true
         },
+        "mobile": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "mobile"
+          },
+          "optional": true
+        },
         "_type": {
           "type": "objectAttribute",
           "value": {
@@ -356,6 +364,102 @@
           "value": {
             "type": "inline",
             "name": "mobile.media"
+          },
+          "optional": true
+        },
+        "hotspot": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageHotspot"
+          },
+          "optional": true
+        },
+        "crop": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageCrop"
+          },
+          "optional": true
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "image"
+          }
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "galleryImage.mobile",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "asset": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageAsset.reference"
+          },
+          "optional": true
+        },
+        "media": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "galleryImage.mobile.media"
+          },
+          "optional": true
+        },
+        "hotspot": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageHotspot"
+          },
+          "optional": true
+        },
+        "crop": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageCrop"
+          },
+          "optional": true
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "image"
+          }
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "image.mobile",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "asset": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageAsset.reference"
+          },
+          "optional": true
+        },
+        "media": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "image.mobile.media"
           },
           "optional": true
         },
@@ -3721,7 +3825,7 @@
                 "type": "objectAttribute",
                 "value": {
                   "type": "inline",
-                  "name": "mobile"
+                  "name": "image.mobile"
                 },
                 "optional": true
               },
@@ -4186,6 +4290,14 @@
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
+                  },
+                  "optional": true
+                },
+                "mobile": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "galleryImage.mobile"
                   },
                   "optional": true
                 },
