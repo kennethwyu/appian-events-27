@@ -44,6 +44,13 @@ export default defineConfig({
 		codeInput(),
 		media(),
 	],
+	document: {
+		// Global modules are hidden from the structure, so keep them out of the
+		// create menu as well — otherwise one can be made with nowhere to find it,
+		// and PAGE_QUERY would still inject it.
+		newDocumentOptions: (prev) =>
+			prev.filter((template) => template.templateId !== 'global-module'),
+	},
 	form: {
 		components: {
 			portableText: {
