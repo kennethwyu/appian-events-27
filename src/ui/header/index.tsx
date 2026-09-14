@@ -29,9 +29,9 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 	const blurb = site?.header?.blurb
 
 	return (
-		// The rule is an inset pseudo-element, not a border: the artboard's header
-		// is 64 tall *including* it, so a border-b would push the box to 65 and
-		// open a 2px gap under the active item's underline instead of 1.
+		// An inset pseudo-element, not border-b: the artboard's header is 64 tall
+		// including its rule, so a border would make the box 65 and double the
+		// gap under the active item's underline.
 		<Wrapper className="layout-header bg-background max-md:header-open:shadow-xl text-heading-on-dark after:bg-border-on-dark-primary sticky top-0 z-10 transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px">
 			<div
 				className={cn(

@@ -5,10 +5,8 @@ import Img, { Source } from '@/ui/img'
 /** Matches the lg: variants below, where the mosaic becomes the 4:3 track. */
 const MOBILE_MEDIA = '(width < 1024px)'
 
-/**
- * `contents` so the <img> stays the flex/grid item and keeps the layout classes
- * — <picture> is only here to carry the art-directed mobile source.
- */
+/** `contents` so the <img> stays the flex/grid item and keeps its layout
+ * classes; the <picture> only carries the art-directed mobile source. */
 function Art({
 	image,
 	width,

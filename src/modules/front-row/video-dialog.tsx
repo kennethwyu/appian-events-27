@@ -55,10 +55,9 @@ export default function VideoDialog({
 				{label}
 			</button>
 
-			{/* Backdrop click closes: ::backdrop is part of the dialog box, so a click
-			 * out there targets the dialog; content clicks target a descendant. The
-			 * pointerdown has to have landed there too, or dragging a player slider
-			 * and releasing outside would close mid-scrub. */}
+			{/* ::backdrop is part of the dialog box, so a click out there targets the
+			 * dialog itself. The pointerdown must have landed there too, or dragging
+			 * a player slider and releasing outside would close mid-scrub. */}
 			<dialog
 				ref={dialog}
 				aria-label={label}

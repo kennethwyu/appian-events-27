@@ -5,8 +5,7 @@ import { count } from '@/lib/utils'
 import defineModule from '@/sanity/schemaTypes/fragments/define-module'
 
 // Art direction, not a resize: the mosaic's slots are portrait and 160x116 on
-// desktop but all 4:3 on the mobile track, so each image carries both crops and
-// a <picture> media query picks one.
+// desktop but all 4:3 on the mobile track, so each image carries both crops.
 const image = (name: string) =>
 	defineField({
 		name,
