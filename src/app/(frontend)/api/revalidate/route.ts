@@ -3,8 +3,8 @@ import { revalidatePath } from 'next/cache'
 import type { NextRequest } from 'next/server'
 
 /**
- * Sanity webhook target. Published pages are cached under `cacheLife: sanity`
- * (1y), so nothing re-renders on its own — this is how content edits go live.
+ * Sanity webhook target. Pages carry `cacheLife('hours')`, so edits surface
+ * within the hour regardless; this is what makes them go live immediately.
  *
  * Redirect documents are resolved in next.config at BUILD time, so edits to
  * them need a redeploy (point a Vercel Deploy Hook at the same webhook), not a
