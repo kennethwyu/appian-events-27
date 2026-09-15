@@ -68,7 +68,7 @@ await client.createOrReplace({
 		para('f2', [
 			span(
 				'f2s',
-				'We automate complex processes in large enterprises and governments. Our platform is known for its unique reliability and scale. We2019ve been automating processes for 25 years and understand enterprise operations like no one else.',
+				'We automate complex processes in large enterprises and governments. Our platform is known for its unique reliability and scale. We’ve been automating processes for 25 years and understand enterprise operations like no one else.',
 			),
 		]),
 		para('f3', [
