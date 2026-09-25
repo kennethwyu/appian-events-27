@@ -1,5 +1,4 @@
 import { groq } from 'next-sanity'
-import { cacheLife } from 'next/cache'
 import { AGENDA_QUERY } from '@/modules/agenda/query'
 import { FINALE_QUERY } from '@/modules/finale/query'
 import { FRONT_ROW_QUERY } from '@/modules/front-row/query'
@@ -102,7 +101,6 @@ export const MODULES_QUERY = groq`
 
 export async function getSite({ perspective, stega }: DynamicFetchOptions) {
 	'use cache'
-	cacheLife('hours')
 	const { data } = await sanityFetch({ query: SITE_QUERY, perspective, stega })
 	return data as SITE_QUERY_RESULT
 }

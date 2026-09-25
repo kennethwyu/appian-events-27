@@ -71,7 +71,9 @@ export default async function RootLayout({
 						<Footer perspective="published" stega={false} />
 					)}
 
-					<SanityLive includeDrafts={showDrafts} />
+					{/* Editors only: for visitors, each publish re-rendered every open
+					 * tab on Vercel. They get updates via /api/revalidate. */}
+					{showDrafts && <SanityLive includeDrafts />}
 
 					{isDraftMode && (
 						<>

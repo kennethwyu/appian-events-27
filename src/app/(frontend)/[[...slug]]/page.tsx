@@ -1,13 +1,15 @@
 import pkg from '@@/package.json'
 import type { Metadata } from 'next'
-import { groq } from 'next-sanity'
+import { groq, stegaClean } from 'next-sanity'
 import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { dev, ROUTES } from '@/lib/env'
 import { resolveOgImage } from '@/lib/og'
+import { endOfDayInZone } from '@/lib/utils'
 import ModulesResolver from '@/modules'
+import { EVENT_TIMEZONE } from '@/modules/pricing'
 import {
 	getDynamicFetchOptions,
 	sanityFetch,
@@ -57,12 +59,13 @@ async function CachedPage({
 	stega,
 }: { slug?: string[] } & DynamicFetchOptions) {
 	'use cache'
-	// The default `sanity` profile is 1y/1y, which means a missing or broken
-	// revalidate webhook freezes the site indefinitely, and any date-driven
-	// content (the pricing cutoff) never rolls over. An hour bounds both.
-	cacheLife('hours')
 	const page = await getPage({ slug, perspective, stega })
 	if (!page) notFound()
+
+	// Cached until /api/revalidate purges it, except pricing reads the clock:
+	// expire at the next cutoff so the price rolls over.
+	const untilCutoff = secondsUntilNextCutoff(page)
+	if (untilCutoff) cacheLife({ revalidate: untilCutoff })
 
 	return <ModulesResolver page={page} />
 }
@@ -115,7 +118,7 @@ export async function generateStaticParams() {
 	})) as string[]
 
 	return slugs.map((slug) => ({
-		slug: slug === 'index' ? undefined : slug.split('/'),
+		slug: slug === 'index' ? [] : slug.split('/'),
 	}))
 }
 
@@ -125,10 +128,6 @@ async function getPage({
 	stega,
 }: { slug?: string[] } & DynamicFetchOptions) {
 	'use cache'
-	// Bounded explicitly: the config default (`sanity`) is 1y, and an outer
-	// cacheLife does not shorten an inner one, so leaving this implicit would
-	// re-render CachedPage hourly against year-old content.
-	cacheLife('hours')
 	const { data } = await sanityFetch({
 		query: PAGE_QUERY,
 		params: { slug: slug ? slug.join('/') : 'index' },
@@ -136,6 +135,19 @@ async function getPage({
 		stega,
 	})
 	return data as PAGE_QUERY_RESULT
+}
+
+/** Seconds until the soonest future pricing cutoff on the page, if any. */
+function secondsUntilNextCutoff(page: NonNullable<PAGE_QUERY_RESULT>) {
+	const now = Date.now()
+	const upcoming = (page.modules ?? [])
+		.flatMap((m) => (m?._type === 'pricing' && m.cutoff ? [m.cutoff] : []))
+		.map((date) => endOfDayInZone(stegaClean(date), EVENT_TIMEZONE).getTime())
+		.filter((t) => t > now)
+
+	if (!upcoming.length) return undefined
+	// +1s: land just after the cutoff, not before.
+	return Math.ceil((Math.min(...upcoming) - now) / 1000) + 1
 }
 
 async function getPageMetadata({

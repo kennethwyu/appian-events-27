@@ -3,8 +3,8 @@ import { revalidatePath } from 'next/cache'
 import type { NextRequest } from 'next/server'
 
 /**
- * Sanity webhook target. Pages carry `cacheLife('hours')`, so edits surface
- * within the hour regardless; this is what makes them go live immediately.
+ * Sanity webhook target — the only way published edits reach the site (pages
+ * have no time-based expiry bar pricing cutoffs). If it breaks, content stays stale.
  *
  * Redirect documents are resolved in next.config at BUILD time, so edits to
  * them need a redeploy (point a Vercel Deploy Hook at the same webhook), not a

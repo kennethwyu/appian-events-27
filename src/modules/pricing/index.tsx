@@ -7,7 +7,7 @@ import CTAList from '@/ui/cta-list'
 import { marks } from '@/ui/portable-text-marks'
 
 /** Appian World 2027 is in San Diego; "through <date>" means local time. */
-const EVENT_TIMEZONE = 'America/Los_Angeles'
+export const EVENT_TIMEZONE = 'America/Los_Angeles'
 
 export default function ({
 	intro,
@@ -24,8 +24,7 @@ export default function ({
 	testimonials,
 	...props
 }: Pricing) {
-	// Evaluated server-side. The page is cached for an hour (see CachedPage), so
-	// the rollover lands within an hour of the cutoff rather than instantly.
+	// Evaluated server-side; CachedPage expires its render at the cutoff.
 	//
 	// The cutoff is INCLUSIVE and anchored to the venue's timezone. A Sanity date
 	// parses as UTC midnight, so comparing against it directly ends the offer a
