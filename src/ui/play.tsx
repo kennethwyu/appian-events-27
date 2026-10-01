@@ -1,27 +1,17 @@
+/** DS "Play Button". The tile is currentColor; the triangle stays neutral-200. */
 export default function Play({ className }: { className?: string }) {
 	return (
 		<svg
-			viewBox="0 0 16 16"
+			viewBox="0 0 43 32"
 			fill="none"
 			aria-hidden
 			className={className}
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<circle
-				cx="8"
-				cy="8"
-				r="7.25"
-				stroke="currentColor"
-				strokeWidth="1.33"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
+			<rect width="43" height="32" rx="2.67" className="fill-current" />
 			<path
-				d="M6.5 5.2 10.9 8l-4.4 2.8V5.2Z"
-				stroke="currentColor"
-				strokeWidth="1.33"
-				strokeLinecap="round"
-				strokeLinejoin="round"
+				d="M27.17 15.42a.67.67 0 0 1 0 1.16l-8 4.62a.67.67 0 0 1-1-.58v-9.24a.67.67 0 0 1 1-.58l8 4.62Z"
+				className="fill-neutral-200"
 			/>
 		</svg>
 	)

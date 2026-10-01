@@ -1,0 +1,10 @@
+<svg width="496" height="641" viewBox="0 0 496 641" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.2" filter="url(#blur)">
+<path d="M120 120V521L376 266.386V120H120Z" fill="#2322F0"/>
+</g>
+<defs>
+<filter id="blur" x="0" y="0" width="496" height="641" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feGaussianBlur stdDeviation="60"/>
+</filter>
+</defs>
+</svg>

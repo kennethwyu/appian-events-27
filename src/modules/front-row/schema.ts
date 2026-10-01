@@ -39,8 +39,8 @@ export default defineModule({
 					preview: { select: { title: 'title', subtitle: 'body' } },
 				}),
 			],
-			validation: (Rule) => Rule.max(4),
-			description: 'Up to four. The desktop layout is designed for four.',
+			validation: (Rule) => Rule.max(3),
+			description: 'Up to three. The desktop layout is designed for three.',
 			group: 'content',
 		}),
 		defineField({

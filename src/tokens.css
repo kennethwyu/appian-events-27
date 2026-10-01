@@ -148,14 +148,17 @@
 	--spacing-intra-xxlg: 2rem; /* 32 */
 	--spacing-intra-xxxl: 2.5rem; /* 40 */
 	--spacing-intra-huge: 3rem; /* 48 */
+	--spacing-intra-maxi: 4rem; /* 64 */
 
 	/* measure-gap-inter/* (between sections) */
 	--spacing-inter-medm: 5rem; /* 80 */
+	--spacing-inter-lrge: 6rem; /* 96 */
 	--spacing-inter-xlrg: 7rem; /* 112 */
 
 	/* measure-grid/* */
 	--spacing-grid-margin-desktop: 5rem; /* 80 */
 	--spacing-grid-margin-mobile: 1.5rem; /* 24, from the 360 artboard */
+	--spacing-grid-gutter: 2rem; /* 32 */
 
 	/* Measure Contextual/* */
 	--spacing-button-cta-height: 2.5rem; /* 40 */

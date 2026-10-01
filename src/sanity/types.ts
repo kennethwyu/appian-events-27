@@ -599,6 +599,24 @@ export type FrontRow = {
 	videoLabel?: string
 }
 
+export type FeatureGrid = {
+	_type: 'feature-grid'
+	attributes?: ModuleAttributes
+	intro?: string
+	ctas?: Array<
+		{
+			_key: string
+		} & Cta
+	>
+	features?: Array<{
+		icon?: 'clipboard-check' | 'ai-browser-spark' | 'users' | 'account-setting'
+		title?: string
+		body?: string
+		_type: 'feature'
+		_key: string
+	}>
+}
+
 export type Finale = {
 	_type: 'finale'
 	attributes?: ModuleAttributes
@@ -908,6 +926,9 @@ export type GlobalModule = {
 		  } & CustomHtml)
 		| ({
 				_key: string
+		  } & FeatureGrid)
+		| ({
+				_key: string
 		  } & Finale)
 		| ({
 				_key: string
@@ -956,6 +977,9 @@ export type GlobalModule = {
 		| ({
 				_key: string
 		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureGrid)
 		| ({
 				_key: string
 		  } & Finale)
@@ -1015,6 +1039,9 @@ export type Page = {
 		| ({
 				_key: string
 		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureGrid)
 		| ({
 				_key: string
 		  } & Finale)
@@ -1321,6 +1348,7 @@ export type AllSanitySchemaTypes =
 	| HeroCover
 	| Hero
 	| FrontRow
+	| FeatureGrid
 	| Finale
 	| CustomHtml
 	| Iframe
@@ -1426,6 +1454,48 @@ export type PAGE_QUERY_RESULT = {
 				css?: Code
 				className?: string
 				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-grid'
+				attributes?: ModuleAttributes
+				intro?: string
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: PageReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal: {
+									_type: 'page'
+									title: string | null
+									slug: string | '/' | null
+								} | null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				features?: Array<{
+					icon?:
+						'account-setting' | 'ai-browser-spark' | 'clipboard-check' | 'users'
+					title?: string
+					body?: string
+					_type: 'feature'
+					_key: string
+				}>
 				sidebar: null
 		  }
 		| {
@@ -2594,6 +2664,48 @@ export type NOT_FOUND_QUERY_RESULT = {
 				css?: Code
 				className?: string
 				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-grid'
+				attributes?: ModuleAttributes
+				intro?: string
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: PageReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal: {
+									_type: 'page'
+									title: string | null
+									slug: string | '/' | null
+								} | null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				features?: Array<{
+					icon?:
+						'account-setting' | 'ai-browser-spark' | 'clipboard-check' | 'users'
+					title?: string
+					body?: string
+					_type: 'feature'
+					_key: string
+				}>
 				sidebar: null
 		  }
 		| {

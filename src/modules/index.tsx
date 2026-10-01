@@ -2,6 +2,7 @@ import type { Get } from '@sanity/codegen'
 import { stegaClean } from 'next-sanity'
 import Agenda from '@/modules/agenda'
 import CustomHTML from '@/modules/custom-html'
+import FeatureGrid from '@/modules/feature-grid'
 import Finale from '@/modules/finale'
 import FrontRow from '@/modules/front-row'
 import Hero from '@/modules/hero'
@@ -22,6 +23,7 @@ const MODULES_MAP = {
 	agenda: Agenda,
 	iframe: Iframe,
 	'custom-html': CustomHTML,
+	'feature-grid': FeatureGrid,
 	finale: Finale,
 	'front-row': FrontRow,
 	hero: Hero,

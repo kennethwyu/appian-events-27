@@ -2,6 +2,7 @@ import type { SchemaPluginOptions } from 'sanity'
 // modules
 import agenda from '@/modules/agenda/schema'
 import customHtml from '@/modules/custom-html/schema'
+import featureGrid from '@/modules/feature-grid/schema'
 import finale from '@/modules/finale/schema'
 import frontRow from '@/modules/front-row/schema'
 import heroCover from '@/modules/hero.cover/schema'
@@ -60,6 +61,7 @@ export const schema: SchemaPluginOptions = {
 		agenda,
 		iframe,
 		customHtml,
+		featureGrid,
 		finale,
 		frontRow,
 		hero,

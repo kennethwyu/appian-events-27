@@ -13,7 +13,7 @@ import youtubeId from './youtube-id'
  *             bottom-anchored over it with the play link above the heading.
  *   mobile  — the isometric visual in flow, a discrete 3:2 "video still" pulled
  *             up to overlap it with the play link laid over the still, then the
- *             heading and four stacked descriptors on the plain ground.
+ *             heading and the stacked descriptors on the plain ground.
  *
  * So the media branches per breakpoint while the heading and descriptors are
  * shared. The play link has to appear in both branches (different parents), but
@@ -58,9 +58,9 @@ export default function ({
 				/>
 			</div>
 
-			{/* lg:pt reserves the photo's 388px share of the band so the copy can't
+			{/* lg:pt reserves the photo's 372px share of the band so the copy can't
 			 * climb into the image when the columns wrap at narrower desktop widths. */}
-			<div className="section gap-intra-xxlg pb-intra-xxlg relative flex flex-col pt-8 lg:min-h-[689px] lg:pt-[388px]">
+			<div className="section gap-intra-xxlg pb-intra-xxlg relative flex flex-col pt-8 lg:min-h-[689px] lg:pt-[372px]">
 				{/* Mobile media, in flow. */}
 				<div className="lg:hidden">
 					{/* z-10 so the node leg lands over the stage still, as drawn — the
@@ -99,9 +99,12 @@ export default function ({
 				{!!descriptors?.length && (
 					<>
 						<hr className="border-overlay-light-40 hidden lg:block" />
-						<ul className="gap-intra-xxlg grid lg:grid-cols-4">
+						<ul className="gap-intra-xxlg grid lg:grid-cols-3">
 							{descriptors.map((d, i) => (
-								<li key={d._key ?? i} className="gap-intra-medm flex flex-col">
+								<li
+									key={d._key ?? i}
+									className="gap-intra-medm lg:pr-intra-xlrg flex flex-col"
+								>
 									<h3 className="text-h-xsml text-balance">{d.title}</h3>
 									{d.body && (
 										<p className="text-p-medm text-heading-on-dark-subtle text-pretty">
