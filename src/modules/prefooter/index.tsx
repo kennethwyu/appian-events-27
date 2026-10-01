@@ -4,7 +4,9 @@ import CTAList from '@/ui/cta-list'
 
 export default function ({ intro, body, ctas, ...props }: Prefooter) {
 	return (
-		<Module {...props}>
+		// `relative` lifts it above the logo wall's opaque background spread, which
+		// overhangs into this section.
+		<Module className="relative" {...props}>
 			{/* A 544-wide centred column in the artboard, not the full section. */}
 			<div className="section pt-inter-medm pb-24">
 				<div className="gap-intra-lrge mx-auto flex max-w-[544px] flex-col items-center text-center">
