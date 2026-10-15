@@ -27,8 +27,8 @@ const pricing = {
 	ctaLabelAfterCutoff: 'Reserve Your Ticket',
 	price: '$1,795',
 	fullPrice: '$2,195',
-	cutoff: '2026-10-31',
-	cutoffNote: 'Limited through 31 October',
+	cutoff: '2027-01-31',
+	cutoffNote: 'Limited through 31 January',
 	includes: [
 		'Full access to keynotes and all session tracks',
 		'Hands-on workshops and training labs',
