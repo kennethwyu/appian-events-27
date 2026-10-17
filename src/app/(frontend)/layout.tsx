@@ -1,4 +1,5 @@
 import { GoogleTagManager } from '@next/third-parties/google'
+import type { Metadata } from 'next'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { Funnel_Sans } from 'next/font/google'
 import { draftMode } from 'next/headers'
@@ -18,6 +19,10 @@ const funnelSans = Funnel_Sans({
 	display: 'swap',
 	variable: '--font-funnel-sans',
 })
+
+export const metadata: Metadata = {
+	verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+}
 
 export default async function RootLayout({
 	children,
