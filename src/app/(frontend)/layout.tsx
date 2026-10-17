@@ -1,3 +1,4 @@
+import { GoogleTagManager } from '@next/third-parties/google'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { Funnel_Sans } from 'next/font/google'
 import { draftMode } from 'next/headers'
@@ -34,6 +35,11 @@ export default async function RootLayout({
 			data-scroll-behavior="smooth"
 			className={funnelSans.variable}
 		>
+			{/* Visitors only: no drafts, dev or previews. */}
+			{!showDrafts && process.env.NEXT_PUBLIC_GTM_ID && (
+				<GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+			)}
+
 			<NuqsAdapter>
 				<body className="bg-background text-foreground font-sans antialiased">
 					<a href="#main-content" className="skip-link">
